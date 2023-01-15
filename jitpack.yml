@@ -1,2 +1,3 @@
 install:
-  - sudo ./gradlew publishJvmPublicationToMavenLocal
+  - chmod +x gradlew
+  - ./gradlew publishJvmPublicationToMavenLocal
