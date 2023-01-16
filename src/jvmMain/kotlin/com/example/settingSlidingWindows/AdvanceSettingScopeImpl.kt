@@ -55,7 +55,10 @@ class AdvanceSettingScopeImpl(
                         modifier = Modifier.fillMaxWidth().padding(16.dp)
                     ) {
                         IconButton(
-                            onClick = { currentIndex.value = 0 }
+                            onClick = {
+                                isFistView.value = false
+                                println("slider icon click -> isFistView = false")
+                            }
                         ) {
                             sliderIcon()
                         }

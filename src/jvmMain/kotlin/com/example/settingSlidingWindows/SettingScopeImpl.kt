@@ -32,21 +32,23 @@ class SettingScopeImpl(
         sliderIcon: @Composable () -> Unit,
         advanceItemContent: (AdvanceSettingScope.() -> Unit)?,
     ) {
+        val index = size
         list.add {
             baseItem(
                 icon = icon,
                 title = title,
                 subTitle = subTitle,
                 sliderIcon = sliderIcon,
-                index = size
+                index = index
             )
         }
+        println("add an item, index = $index")
 
         val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
             map = map,
             currentIndex = currentIndex,
             isFistView = isFistView,
-            index = size,
+            index = index,
             title = title.value
         )
         if (advanceItemContent != null) {
@@ -105,14 +107,22 @@ class SettingScopeImpl(
     ) {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             Row(
-                Modifier
-                    .clickable(onClick = { currentIndex.value = index }),
+                modifier = Modifier
+                    .clickable(
+                        onClick = {
+                            currentIndex.value = index
+                            println("on click -> currentIndex = $index")
+                        }
+                    ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
 
                     IconButton(
-                        onClick = { currentIndex.value = index }
+                        onClick = {
+                            currentIndex.value = index
+                            println("slider icon click -> currentIndex = $index")
+                        }
                     ) {
                         sliderIcon()
                     }

@@ -5,10 +5,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-
-
-private val isFistView = mutableStateOf(true)
-private val currentIndex = mutableStateOf(0)
+import androidx.compose.runtime.remember
 
 
 private val map: MutableMap<Int, (() -> Unit)?> = mutableMapOf()
@@ -19,6 +16,10 @@ private val list: MutableList<@Composable () -> Unit> = mutableListOf()
 fun setting(
     content: SettingScope.() -> Unit,
 ) {
+
+    val isFistView = remember { mutableStateOf(true) }
+    val currentIndex = remember { mutableStateOf(0) }
+
     val settingScopeImpl = SettingScopeImpl(
         map = map,
         list = list,
@@ -27,6 +28,7 @@ fun setting(
     )
     settingScopeImpl.content()
 
+    println("bisous")
     if (isFistView.value) {
         LazyColumn {
             items(list) {
