@@ -1,5 +1,5 @@
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
@@ -18,16 +18,61 @@ fun main () = application {
                 title = "hello"
             )
             item(
-                icon = {},
-                title = mutableStateOf("title"),
-                subTitle = mutableStateOf("title"),
-                sliderIcon = {}
+                icon = {
+                    Icon(
+                        painter = getIcon("settings/translate40"),
+                        contentDescription = null
+                    )
+                },
+                title = mutableStateOf("translate"),
+                subTitle = mutableStateOf("app translation"),
+                sliderIcon = {
+                    Icon(
+                        painter = getIcon("chevron/chevron_right40"),
+                        contentDescription = null
+                    )
+                }
             ) {
                 advanceItem(
-                    sliderIcon = {}
+                    sliderIcon = {
+                        Icon(
+                            painter = getIcon("chevron/chevron_left40"),
+                            contentDescription = null
+                        )
+                    }
                 ) {
                     item {
-                        Text("bonjour")
+                        Text("hello")
+                    }
+                }
+            }
+
+            item(
+                icon = {
+                    Icon(
+                        painter = getIcon("settings/help40"),
+                        contentDescription = null
+                    )
+                },
+                title = mutableStateOf("help"),
+                subTitle = mutableStateOf("get help here"),
+                sliderIcon = {
+                    Icon(
+                        painter = getIcon("chevron/chevron_right40"),
+                        contentDescription = null
+                    )
+                }
+            ) {
+                advanceItem(
+                    sliderIcon = {
+                        Icon(
+                            painter = getIcon("chevron/chevron_left40"),
+                            contentDescription = null
+                        )
+                    }
+                ) {
+                    item {
+                        Text("hello")
                     }
                 }
             }
