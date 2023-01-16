@@ -15,11 +15,7 @@ repositories {
 }
 
 kotlin {
-    jvm {
-        testRuns["test"].executionTask.configure {
-            useJUnitPlatform()
-        }
-    }
+    jvm()
     sourceSets {
         val jvmMain by getting {
             dependencies {
@@ -28,6 +24,8 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation("org.jetbrains.compose.material3:material3-desktop:${extra["compose.version"] as String}")
                 implementation(kotlin("test"))
             }
         }
