@@ -6,14 +6,13 @@ import androidx.compose.runtime.Composable
 interface AdvanceSettingScope {
 
 
-    @Composable
     fun advanceItem(
-        sliderIcon: @Composable ()-> Unit,
-        content: LazyListScope.()->Unit
+        sliderIcon: @Composable () -> Unit,
+        content: LazyListScope.() -> Unit,
     )
 
-    @Composable
+
     fun advanceItem(
-        content: @Composable ()->Unit
+        content: @Composable () -> Unit,
     )
 }

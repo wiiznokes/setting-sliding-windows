@@ -2,11 +2,13 @@ package com.example.settingSlidingWindows
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.material3.Divider
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -15,108 +17,149 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
 class SettingScopeImpl(
-    private val map: Map<Int, AdvanceSettingScope?>
-): SettingScope {
+    private val map: MutableMap<Int, (@Composable () -> Unit)?>,
+    private val list: MutableList<@Composable () -> Unit>,
+    private val isFistView: MutableState<Boolean>,
+    private val currentIndex: MutableState<Int>,
+) : SettingScope {
 
     private var size = 0
 
-    @Composable
-    private fun shoudlShow(
-        index: Int,
-        currentIndex: Int,
-        content: () -> Unit,
-        advanceItemContent: @Composable (AdvanceSettingScope.() -> Unit)? = null
-    ) {
-
-        if (index == 0) {
-
-        }
-    }
-
-    private val firstView = mutableListOf<SettingScope>()
-
-
-
-
-    @Composable
     override fun item(
         icon: @Composable (() -> Unit)?,
         title: MutableState<String>,
         subTitle: MutableState<String>?,
         sliderIcon: @Composable () -> Unit,
-        advanceItemContent: @Composable (AdvanceSettingScope.() -> Unit)? = null
+        advanceItemContent: (AdvanceSettingScope.() -> Unit)?,
     ) {
-        val index = size
-        size++
+        list.add {
+            baseItem(
+                icon = icon,
+                title = title,
+                subTitle = subTitle,
+                sliderIcon = sliderIcon,
+                index = size
+            )
+        }
 
         val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
+            map = map,
             currentIndex = currentIndex,
             isFistView = isFistView,
-            index = index
+            index = size,
+            title = title.value
         )
         if (advanceItemContent != null) {
             advanceSettingScopeImpl.advanceItemContent()
         }
 
+        size++
 
-            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                Row(
-                    Modifier
-                        .clickable(onClick = { currentIndex.value = index }),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+    }
 
-                        IconButton(
-                            onClick = { currentIndex.value = index }
-                        ) {
-                            sliderIcon()
-                        }
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            if (icon != null) {
-                                icon()
-                                Spacer(modifier = Modifier.width(16.dp))
-                            }
+    override fun item(
+        content: @Composable () -> Unit,
+        advanceItemContent: (AdvanceSettingScope.() -> Unit)?,
+    ) {
+        list.add(content)
 
-                            Column {
-                                Text(
-                                    text = title.value,
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    overflow = TextOverflow.Clip,
-                                    maxLines = 2
-                                )
-                                if (subTitle != null) {
-                                    Text(
-                                        text = subTitle.value,
-                                        overflow = TextOverflow.Clip,
-                                        maxLines = 2
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+        val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
+            map = map,
+            currentIndex = currentIndex,
+            isFistView = isFistView,
+            index = size
+        )
+        if (advanceItemContent != null) {
+            advanceSettingScopeImpl.advanceItemContent()
+            size++
+        }
+    }
 
-            Divider(
-                modifier = Modifier.fillMaxWidth(),
-                thickness = 2.dp
+
+    override fun topSetting(
+        title: String,
+    ) {
+        list.add {
+            baseTopSetting(
+                title = title
             )
         }
     }
 
-    @Composable
-    override fun item(content: @Composable () -> Unit) {
-        TODO("Not yet implemented")
+
+    override fun topSetting(
+        content: @Composable () -> Unit,
+    ) {
+        list.add(content)
     }
 
+
     @Composable
-    override fun topSetting(title: String) {
+    private fun baseItem(
+        icon: @Composable (() -> Unit)?,
+        title: MutableState<String>,
+        subTitle: MutableState<String>?,
+        sliderIcon: @Composable () -> Unit,
+        index: Int,
+    ) {
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+            Row(
+                Modifier
+                    .clickable(onClick = { currentIndex.value = index }),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+
+                    IconButton(
+                        onClick = { currentIndex.value = index }
+                    ) {
+                        sliderIcon()
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (icon != null) {
+                            icon()
+                            Spacer(modifier = Modifier.width(16.dp))
+                        }
+                        size++
+
+                        Column {
+                            Text(
+                                text = title.value,
+                                style = MaterialTheme.typography.bodyLarge,
+                                overflow = TextOverflow.Clip,
+                                maxLines = 2
+                            )
+                            if (subTitle != null) {
+                                Text(
+                                    text = subTitle.value,
+                                    overflow = TextOverflow.Clip,
+                                    maxLines = 2
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Divider(
+            modifier = Modifier.fillMaxWidth(),
+            thickness = 2.dp
+        )
+    }
+
+
+    @Composable
+    private fun baseTopSetting(
+        title: String,
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -135,12 +178,6 @@ class SettingScopeImpl(
             color = MaterialTheme.colorScheme.inverseOnSurface,
             thickness = 2.dp
         )
-
-    }
-
-    @Composable
-    override fun topSetting(content: @Composable () -> Unit) {
-        TODO("Not yet implemented")
     }
 
 }
