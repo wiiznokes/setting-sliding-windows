@@ -2,7 +2,6 @@ package com.example.settingSlidingWindows
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -14,14 +13,29 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 
-class SettingScopeImpl: SettingScope {
+class SettingScopeImpl(
+    private val map: Map<Int, AdvanceSettingScope?>
+): SettingScope {
 
-
-    private val isFistView = mutableStateOf(true)
     private var size = 0
-    private val currentIndex = mutableStateOf(0)
+
+    @Composable
+    private fun shoudlShow(
+        index: Int,
+        currentIndex: Int,
+        content: () -> Unit,
+        advanceItemContent: @Composable (AdvanceSettingScope.() -> Unit)? = null
+    ) {
+
+        if (index == 0) {
+
+        }
+    }
+
+    private val firstView = mutableListOf<SettingScope>()
+
+
 
 
     @Composable
@@ -30,7 +44,7 @@ class SettingScopeImpl: SettingScope {
         title: MutableState<String>,
         subTitle: MutableState<String>?,
         sliderIcon: @Composable () -> Unit,
-        advanceItemContent: @Composable AdvanceSettingScope.() -> Unit
+        advanceItemContent: @Composable (AdvanceSettingScope.() -> Unit)? = null
     ) {
         val index = size
         size++
@@ -40,7 +54,9 @@ class SettingScopeImpl: SettingScope {
             isFistView = isFistView,
             index = index
         )
-        advanceSettingScopeImpl.advanceItemContent()
+        if (advanceItemContent != null) {
+            advanceSettingScopeImpl.advanceItemContent()
+        }
 
 
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {

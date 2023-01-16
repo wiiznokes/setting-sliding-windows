@@ -1,18 +1,29 @@
 package com.example.settingSlidingWindows
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 
 
 private val settingScopeImpl = SettingScopeImpl()
+
+
+private val isFistView = mutableStateOf(true)
+private val currentIndex = mutableStateOf(0)
+
+
+private val map = mapOf<Int, AdvanceSettingScope?>()
+
+private val list: MutableList<SettingScope> = mutableListOf()
+
 @Composable
 fun setting(
     content: @Composable SettingScope.() -> Unit
 ) {
+    listOf(content)
+
+    if (isFistView.value)
     Column {
         settingScopeImpl.content()
     }

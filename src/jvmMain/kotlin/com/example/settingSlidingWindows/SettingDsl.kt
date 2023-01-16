@@ -11,7 +11,7 @@ interface SettingScope {
         title: MutableState<String>,
         subTitle: MutableState<String>?,
         sliderIcon: @Composable ()-> Unit,
-        advanceItemContent:@Composable AdvanceSettingScope.() -> Unit
+        advanceItemContent: @Composable() (AdvanceSettingScope.() -> Unit)?
     )
     @Composable
     fun item(
