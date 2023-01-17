@@ -15,7 +15,7 @@ interface AdvanceSettingScope {
      * @param settingColors colors used in the header
      */
     @Composable
-    fun header(
+    fun Header(
         title: String?,
         settingColors: SettingColors?,
     )

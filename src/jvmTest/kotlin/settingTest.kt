@@ -52,7 +52,7 @@ fun settingTest(
             subTitle = language.value
         ) {
 
-            header(null, null)
+            Header(null, null)
 
 
             LazyColumn {

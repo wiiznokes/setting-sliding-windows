@@ -21,7 +21,7 @@ internal class AdvanceSettingScopeImpl(
 ) : AdvanceSettingScope {
 
     @Composable
-    override fun header(
+    override fun Header(
         title: String?,
         settingColors: SettingColors?,
     ) {
@@ -33,12 +33,12 @@ internal class AdvanceSettingScopeImpl(
             )
 
         if (title != null)
-            baseHeader(
+            BaseHeader(
                 title = title,
                 settingColors = settingColors ?: _settingColors
             )
         else
-            baseHeader(
+            BaseHeader(
                 title = _title!!,
                 settingColors = settingColors ?: _settingColors
             )
@@ -47,7 +47,7 @@ internal class AdvanceSettingScopeImpl(
 
 
     @Composable
-    private fun baseHeader(
+    private fun BaseHeader(
         title: String,
         settingColors: SettingColors,
     ) {
