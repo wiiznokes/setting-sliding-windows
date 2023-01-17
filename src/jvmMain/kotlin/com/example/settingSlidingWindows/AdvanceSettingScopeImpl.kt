@@ -56,8 +56,8 @@ class AdvanceSettingScopeImpl(
                     ) {
                         IconButton(
                             onClick = {
-                                isFistView.value = false
-                                println("slider icon click -> isFistView = false")
+                                isFistView.value = true
+                                println("slider icon click -> isFistView = true")
                             }
                         ) {
                             sliderIcon()

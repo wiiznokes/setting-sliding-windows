@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
 
-private val map: MutableMap<Int, (() -> Unit)?> = mutableMapOf()
+private val map: MutableMap<Int, (@Composable () -> Unit)?> = mutableMapOf()
 
 private val list: MutableList<@Composable () -> Unit> = mutableListOf()
 
@@ -28,7 +28,6 @@ fun setting(
     )
     settingScopeImpl.content()
 
-    println("bisous")
     if (isFistView.value) {
         LazyColumn {
             items(list) {

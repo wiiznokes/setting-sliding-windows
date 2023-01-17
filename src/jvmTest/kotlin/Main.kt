@@ -17,6 +17,7 @@ fun main () = application {
             topSetting(
                 title = "hello"
             )
+
             item(
                 icon = {
                     Icon(

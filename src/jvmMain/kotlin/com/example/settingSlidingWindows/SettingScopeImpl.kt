@@ -56,7 +56,6 @@ class SettingScopeImpl(
         }
 
         size++
-
     }
 
 
@@ -111,6 +110,7 @@ class SettingScopeImpl(
                     .clickable(
                         onClick = {
                             currentIndex.value = index
+                            isFistView.value = false
                             println("on click -> currentIndex = $index")
                         }
                     ),
@@ -121,6 +121,7 @@ class SettingScopeImpl(
                     IconButton(
                         onClick = {
                             currentIndex.value = index
+                            isFistView.value = false
                             println("slider icon click -> currentIndex = $index")
                         }
                     ) {
