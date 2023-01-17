@@ -2,41 +2,54 @@ package com.example.settingSlidingWindows
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
 
-
+data class SettingState(
+    val isFistView: Boolean = true,
+    val advanceIndex: Int = 0
+)
 
 @Composable
-fun setting(
+fun rememberSettingState(
+    initialValue: SettingState = SettingState(),
+    key: Any = Unit
+): MutableState<SettingState> {
+    return remember(key) {
+        mutableStateOf(initialValue)
+    }
+}
+
+@Composable
+fun Setting(
+    settingState: MutableState<SettingState> = rememberSettingState(),
     content: SettingScope.() -> Unit,
 ) {
+
+    settingState.value.advanceIndex
+
     val map: MutableMap<Int, (@Composable () -> Unit)?> = mutableMapOf()
 
     val list: MutableList<@Composable () -> Unit> = mutableListOf()
 
-    val isFistView = remember { mutableStateOf(true) }
-    val currentIndex = remember { mutableStateOf(0) }
-
     val settingScopeImpl = SettingScopeImpl(
         map = map,
         list = list,
-        isFistView = isFistView,
-        currentIndex = currentIndex
+        settingState
     )
     settingScopeImpl.content()
 
-    if (isFistView.value) {
+    if (settingState.value.isFistView) {
         LazyColumn {
             items(list) {
                 it()
             }
         }
     } else {
-        val contentFun = map[currentIndex.value]
+        val contentFun = map[settingState.value.advanceIndex]
         if (contentFun != null) {
             contentFun()
         } else {

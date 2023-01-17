@@ -14,8 +14,7 @@ import androidx.compose.ui.unit.dp
 
 class AdvanceSettingScopeImpl(
     private val map: MutableMap<Int, (@Composable () -> Unit)?>,
-    private val currentIndex: MutableState<Int>,
-    private val isFistView: MutableState<Boolean>,
+    private val settingState: MutableState<SettingState>,
     private val index: Int,
     private val title: String? = null,
 ) : AdvanceSettingScope {
@@ -53,7 +52,9 @@ class AdvanceSettingScopeImpl(
                     ) {
                         IconButton(
                             onClick = {
-                                isFistView.value = true
+                                settingState.value = settingState.value.copy(
+                                    isFistView = true
+                                )
                                 println("slider icon click -> isFistView = true")
                             }
                         ) {

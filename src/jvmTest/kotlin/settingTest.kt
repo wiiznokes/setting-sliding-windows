@@ -1,15 +1,26 @@
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import com.example.settingSlidingWindows.setting
+import androidx.compose.runtime.remember
+import com.example.settingSlidingWindows.Setting
+import com.example.settingSlidingWindows.rememberSettingState
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun settingTest() {
-    setting {
+fun settingTest(
+    drawerState: DrawerState
+) {
+    val settingState = rememberSettingState(
+        key = drawerState.isOpen
+    )
+
+    Setting(settingState) {
         topSetting(
-            title = "hello"
+            title = "Setting"
         )
 
         item(

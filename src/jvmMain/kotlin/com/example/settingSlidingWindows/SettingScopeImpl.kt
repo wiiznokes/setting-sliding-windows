@@ -16,8 +16,7 @@ import androidx.compose.ui.unit.dp
 class SettingScopeImpl(
     private val map: MutableMap<Int, (@Composable () -> Unit)?>,
     private val list: MutableList<@Composable () -> Unit>,
-    private val isFistView: MutableState<Boolean>,
-    private val currentIndex: MutableState<Int>,
+    private val settingState: MutableState<SettingState>
 ) : SettingScope {
 
     private var size = 0
@@ -41,8 +40,7 @@ class SettingScopeImpl(
 
         val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
             map = map,
-            currentIndex = currentIndex,
-            isFistView = isFistView,
+            settingState = settingState,
             index = index,
             title = title.value
         )
@@ -60,13 +58,13 @@ class SettingScopeImpl(
     ) {
         list.add(content)
 
-        val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
-            map = map,
-            currentIndex = currentIndex,
-            isFistView = isFistView,
-            index = size
-        )
+
         if (advanceItemContent != null) {
+            val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
+                map = map,
+                settingState = settingState,
+                index = size
+            )
             advanceSettingScopeImpl.advanceItemContent()
             size++
         }
@@ -103,9 +101,11 @@ class SettingScopeImpl(
                 modifier = Modifier
                     .clickable(
                         onClick = {
-                            currentIndex.value = index
-                            isFistView.value = false
-                            println("on click -> currentIndex = $index")
+                            settingState.value = settingState.value.copy(
+                                isFistView = false,
+                                advanceIndex = index
+                            )
+                            println("on click -> advanceIndex = $index")
                         }
                     ),
                 verticalAlignment = Alignment.CenterVertically
@@ -114,9 +114,11 @@ class SettingScopeImpl(
 
                     IconButton(
                         onClick = {
-                            currentIndex.value = index
-                            isFistView.value = false
-                            println("slider icon click -> currentIndex = $index")
+                            settingState.value = settingState.value.copy(
+                                isFistView = false,
+                                advanceIndex = index
+                            )
+                            println("slider icon click -> advanceIndex = $index")
                         }
                     ) {
                         Icon(

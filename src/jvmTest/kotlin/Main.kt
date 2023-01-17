@@ -1,5 +1,7 @@
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
@@ -12,10 +14,16 @@ fun main () = application {
             exitApplication()
         }
     ) {
+
+        val drawerState = rememberDrawerState(DrawerValue.Closed)
+
         ModalNavigationDrawer(
             drawerContent = {
-                settingTest()
-            }
+                settingTest(
+                    drawerState = drawerState
+                )
+            },
+            drawerState = drawerState,
         ) {
 
         }
