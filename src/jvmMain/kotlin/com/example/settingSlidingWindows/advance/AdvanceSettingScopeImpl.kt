@@ -16,7 +16,7 @@ import com.example.settingSlidingWindows.SettingState
 import com.example.settingSlidingWindows.utils.getIcon
 
 
-class AdvanceSettingScopeImpl(
+internal class AdvanceSettingScopeImpl(
     private val map: MutableMap<Int, (@Composable () -> Unit)?>,
     private val settingState: MutableState<SettingState>,
     private val settingColors: SettingColors,

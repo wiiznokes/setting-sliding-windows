@@ -26,16 +26,14 @@ enum class Languages {
 fun settingTest(
     drawerState: DrawerState
 ) {
-    val settingState = rememberSettingState(
-        key = drawerState.isOpen
-    )
+
 
     val language = remember {
         mutableStateOf(Languages.en.name)
     }
 
-    Setting(settingState) {
-        topSetting(
+    Setting {
+        header(
             title = "Setting"
         )
 
@@ -49,6 +47,9 @@ fun settingTest(
             title = "translate",
             subTitle = language.value
         ) {
+
+
+
             advanceItem {
 
                 items(Languages.values()) {
@@ -75,34 +76,6 @@ fun settingTest(
                 item {
                     Spacer(Modifier.height(80.dp))
                 }
-            }
-        }
-
-        item(
-            content = {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            println("on custom click -> index = $it")
-                            settingState.value = settingState.value.copy(
-                                isFistView = false,
-                                advanceIndex = it
-                            )
-                        }
-                ) {
-                    Text(
-                        text = "Custom bitch",
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-            }
-        ) {
-            advanceItemCustom {
-                Text(
-                    text = "Bonsoir",
-                    modifier = Modifier.padding(16.dp)
-                )
             }
         }
     }

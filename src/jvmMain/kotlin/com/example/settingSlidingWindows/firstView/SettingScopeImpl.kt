@@ -19,7 +19,7 @@ import com.example.settingSlidingWindows.advance.AdvanceSettingScope
 import com.example.settingSlidingWindows.advance.AdvanceSettingScopeImpl
 import com.example.settingSlidingWindows.utils.getIcon
 
-class SettingScopeImpl(
+internal class SettingScopeImpl(
     private val map: MutableMap<Int, (@Composable () -> Unit)?>,
     private val list: MutableList<@Composable () -> Unit>,
     private val settingState: MutableState<SettingState>,
@@ -27,6 +27,52 @@ class SettingScopeImpl(
 ) : SettingScope {
 
     private var size = 0
+
+    override fun header(
+        title: String,
+    ) {
+        list.add {
+            baseHeader(
+                title = title
+            )
+        }
+    }
+
+
+    override fun header(
+        content: @Composable () -> Unit,
+    ) {
+        list.add(content)
+    }
+
+    @Composable
+    private fun baseHeader(
+        title: String,
+    ) {
+        Row(
+            modifier = Modifier
+                .background(
+                    color = settingColors.container
+                )
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding(start = 25.dp, top = 40.dp, bottom = 50.dp),
+                text = title,
+                style = MaterialTheme.typography.titleLarge,
+                color = settingColors.onContainer
+            )
+        }
+
+        Divider(
+            modifier = Modifier.fillMaxWidth(),
+            color = settingColors.onContainer,
+            thickness = 2.dp
+        )
+    }
+
 
     override fun item(
         icon: @Composable (() -> Unit)?,
@@ -78,24 +124,6 @@ class SettingScopeImpl(
             advanceSettingScopeImpl.advanceItemContent()
         }
         size++
-    }
-
-
-    override fun topSetting(
-        title: String,
-    ) {
-        list.add {
-            baseTopSetting(
-                title = title
-            )
-        }
-    }
-
-
-    override fun topSetting(
-        content: @Composable () -> Unit,
-    ) {
-        list.add(content)
     }
 
 
@@ -184,27 +212,28 @@ class SettingScopeImpl(
     }
 
 
-    @Composable
-    private fun baseTopSetting(
-        title: String,
-    ) {
-        Row(
-            modifier = Modifier
-                .background(
-                    color = settingColors.container
-                )
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(
-                modifier = Modifier
-                    .padding(start = 25.dp, top = 40.dp, bottom = 50.dp),
-                text = title,
-                style = MaterialTheme.typography.titleLarge,
-                color = settingColors.onContainer
+    override fun group(text: String) {
+        list.add {
+            baseGroup(
+                text = text
             )
         }
+    }
 
+    override fun group(content: @Composable () -> Unit) {
+        list.add(content)
+    }
+
+    @Composable
+    private fun baseGroup(
+        text: String
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+            color = settingColors.onContainer,
+            modifier = Modifier.padding(top = 25.dp, bottom = 5.dp)
+        )
         Divider(
             modifier = Modifier.fillMaxWidth(),
             color = settingColors.onContainer,

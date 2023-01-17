@@ -4,7 +4,14 @@ import androidx.compose.runtime.Composable
 import com.example.settingSlidingWindows.advance.AdvanceSettingScope
 
 interface SettingScope {
+    fun header(
+        title: String,
+    )
 
+
+    fun header(
+        content: @Composable () -> Unit,
+    )
 
     fun item(
         icon: @Composable (() -> Unit)? = null,
@@ -18,13 +25,12 @@ interface SettingScope {
         advanceItemContent: (AdvanceSettingScope.() -> Unit)? = null,
     )
 
-
-    fun topSetting(
-        title: String,
+    fun group(
+        text: String,
     )
 
-
-    fun topSetting(
+    fun group(
         content: @Composable () -> Unit,
     )
+
 }
