@@ -36,7 +36,6 @@ class SettingScopeImpl(
                 index = index
             )
         }
-        println("add an item, index = $index")
 
         val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
             map = map,
@@ -53,21 +52,23 @@ class SettingScopeImpl(
 
 
     override fun item(
-        content: @Composable () -> Unit,
+        content: @Composable (Int) -> Unit,
         advanceItemContent: (AdvanceSettingScope.() -> Unit)?,
     ) {
-        list.add(content)
-
+        val index = size
+        list.add {
+            content(index)
+        }
 
         if (advanceItemContent != null) {
             val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
                 map = map,
                 settingState = settingState,
-                index = size
+                index = index
             )
             advanceSettingScopeImpl.advanceItemContent()
-            size++
         }
+        size++
     }
 
 

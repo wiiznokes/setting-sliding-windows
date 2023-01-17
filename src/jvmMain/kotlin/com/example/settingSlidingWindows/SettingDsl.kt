@@ -7,15 +7,15 @@ interface SettingScope {
 
 
     fun item(
-        icon: @Composable (() -> Unit)?,
+        icon: @Composable (() -> Unit)? = null,
         title: MutableState<String>,
-        subTitle: MutableState<String>?,
-        advanceItemContent: (AdvanceSettingScope.() -> Unit)?,
+        subTitle: MutableState<String>? = null,
+        advanceItemContent: (AdvanceSettingScope.() -> Unit)? = null,
     )
 
     fun item(
-        content: @Composable () -> Unit,
-        advanceItemContent: (AdvanceSettingScope.() -> Unit)?,
+        content: @Composable (Int) -> Unit,
+        advanceItemContent: (AdvanceSettingScope.() -> Unit)? = null,
     )
 
 

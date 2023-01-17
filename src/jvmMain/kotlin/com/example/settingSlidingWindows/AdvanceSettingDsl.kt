@@ -11,7 +11,7 @@ interface AdvanceSettingScope {
     )
 
 
-    fun advanceItemPerso(
+    fun advanceItemCustom(
         content: @Composable () -> Unit,
     )
 }

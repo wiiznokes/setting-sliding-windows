@@ -31,7 +31,7 @@ class AdvanceSettingScopeImpl(
     }
 
 
-    override fun advanceItemPerso(
+    override fun advanceItemCustom(
         content: @Composable () -> Unit,
     ) {
         map[index] = content

@@ -1,12 +1,24 @@
-import androidx.compose.material3.DrawerState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.example.settingSlidingWindows.Setting
 import com.example.settingSlidingWindows.rememberSettingState
+
+@Suppress("EnumEntryName")
+enum class Languages {
+    en,
+    fr;
+
+    companion object {
+        infix fun from(value: String): Languages = Languages.values().first { it.name == value }
+    }
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -17,6 +29,10 @@ fun settingTest(
     val settingState = rememberSettingState(
         key = drawerState.isOpen
     )
+
+    val language = remember {
+        mutableStateOf(Languages.en.name)
+    }
 
     Setting(settingState) {
         topSetting(
@@ -31,29 +47,62 @@ fun settingTest(
                 )
             },
             title = mutableStateOf("translate"),
-            subTitle = mutableStateOf("app translation")
+            subTitle = language
         ) {
             advanceItem {
+
+                items(Languages.values()) {
+                    Column {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    language.value = it.toString()
+                                }
+                        ) {
+                            Text(
+                                text = it.toString(),
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        }
+                        Divider(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.inverseOnSurface,
+                            thickness = 2.dp
+                        )
+                    }
+                }
                 item {
-                    Text("hello")
+                    Spacer(Modifier.height(80.dp))
                 }
             }
         }
 
         item(
-            icon = {
-                Icon(
-                    painter = getIcon("settings/help40"),
-                    contentDescription = null
-                )
-            },
-            title = mutableStateOf("help"),
-            subTitle = mutableStateOf("get help here")
-        ) {
-            advanceItem {
-                item {
-                    Text("hello")
+            content = {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            println("on custom click -> index = $it")
+                            settingState.value = settingState.value.copy(
+                                isFistView = false,
+                                advanceIndex = it
+                            )
+                        }
+                ) {
+                    Text(
+                        text = "Custom bitch",
+                        modifier = Modifier.padding(16.dp)
+                    )
                 }
+            }
+        ) {
+            advanceItemCustom {
+                Text(
+                    text = "Bonsoir",
+                    modifier = Modifier.padding(16.dp)
+                )
             }
         }
     }
