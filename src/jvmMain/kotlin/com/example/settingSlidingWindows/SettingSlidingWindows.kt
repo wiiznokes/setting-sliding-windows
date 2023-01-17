@@ -2,10 +2,36 @@ package com.example.settingSlidingWindows
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import com.example.settingSlidingWindows.firstView.SettingScope
+import com.example.settingSlidingWindows.firstView.SettingScopeImpl
+
+
+
+object SettingDefaults {
+
+    @Composable
+    fun settingColors(
+        container: Color = MaterialTheme.colorScheme.surface,
+        onContainer: Color = MaterialTheme.colorScheme.onSurface
+    ): SettingColors = SettingColors(
+        container = container,
+        onContainer = onContainer
+    )
+}
+
+
+data class SettingColors(
+    val container: Color,
+    val onContainer: Color
+)
+
 
 
 data class SettingState(
@@ -25,7 +51,9 @@ fun rememberSettingState(
 
 @Composable
 fun Setting(
+    modifier: Modifier = Modifier,
     settingState: MutableState<SettingState> = rememberSettingState(),
+    settingColors: SettingColors = SettingDefaults.settingColors(),
     content: SettingScope.() -> Unit,
 ) {
 
@@ -38,12 +66,15 @@ fun Setting(
     val settingScopeImpl = SettingScopeImpl(
         map = map,
         list = list,
-        settingState
+        settingState = settingState,
+        settingColors = settingColors
     )
     settingScopeImpl.content()
 
     if (settingState.value.isFistView) {
-        LazyColumn {
+        LazyColumn(
+            modifier = modifier
+        ) {
             items(list) {
                 it()
             }
@@ -53,7 +84,9 @@ fun Setting(
         if (contentFun != null) {
             contentFun()
         } else {
-            LazyColumn {
+            LazyColumn(
+                modifier = modifier
+            ) {
                 items(list) {
                     it()
                 }

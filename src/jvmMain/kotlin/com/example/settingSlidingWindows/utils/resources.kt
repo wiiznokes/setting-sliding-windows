@@ -1,4 +1,4 @@
-package com.example.settingSlidingWindows
+package com.example.settingSlidingWindows.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -9,7 +9,7 @@ import androidx.compose.ui.res.useResource
 
 
 @Composable
-fun getIcon(id: String): Painter {
+internal fun getIcon(id: String): Painter {
     val density = LocalDensity.current // to calculate the intrinsic size of vector images (SVG, XML)
     return remember {
         useResource("drawable/$id.svg") {

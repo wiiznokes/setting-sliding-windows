@@ -1,15 +1,15 @@
-package com.example.settingSlidingWindows
+package com.example.settingSlidingWindows.firstView
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import com.example.settingSlidingWindows.advance.AdvanceSettingScope
 
 interface SettingScope {
 
 
     fun item(
         icon: @Composable (() -> Unit)? = null,
-        title: MutableState<String>,
-        subTitle: MutableState<String>? = null,
+        title: String,
+        subTitle: String? = null,
         advanceItemContent: (AdvanceSettingScope.() -> Unit)? = null,
     )
 

@@ -1,5 +1,6 @@
-package com.example.settingSlidingWindows
+package com.example.settingSlidingWindows.firstView
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -12,20 +13,26 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.example.settingSlidingWindows.SettingColors
+import com.example.settingSlidingWindows.SettingState
+import com.example.settingSlidingWindows.advance.AdvanceSettingScope
+import com.example.settingSlidingWindows.advance.AdvanceSettingScopeImpl
+import com.example.settingSlidingWindows.utils.getIcon
 
 class SettingScopeImpl(
     private val map: MutableMap<Int, (@Composable () -> Unit)?>,
     private val list: MutableList<@Composable () -> Unit>,
-    private val settingState: MutableState<SettingState>
+    private val settingState: MutableState<SettingState>,
+    private val settingColors: SettingColors,
 ) : SettingScope {
 
     private var size = 0
 
     override fun item(
         icon: @Composable (() -> Unit)?,
-        title: MutableState<String>,
-        subTitle: MutableState<String>?,
-        advanceItemContent: (AdvanceSettingScope.() -> Unit)?,
+        title: String,
+        subTitle: String?,
+        advanceItemContent: (AdvanceSettingScope.() -> Unit)?
     ) {
         val index = size
         list.add {
@@ -40,8 +47,9 @@ class SettingScopeImpl(
         val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
             map = map,
             settingState = settingState,
+            settingColors = settingColors,
             index = index,
-            title = title.value
+            title = title
         )
         if (advanceItemContent != null) {
             advanceSettingScopeImpl.advanceItemContent()
@@ -64,6 +72,7 @@ class SettingScopeImpl(
             val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
                 map = map,
                 settingState = settingState,
+                settingColors = settingColors,
                 index = index
             )
             advanceSettingScopeImpl.advanceItemContent()
@@ -93,13 +102,16 @@ class SettingScopeImpl(
     @Composable
     private fun baseItem(
         icon: @Composable (() -> Unit)?,
-        title: MutableState<String>,
-        subTitle: MutableState<String>?,
+        title: String,
+        subTitle: String?,
         index: Int,
     ) {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             Row(
                 modifier = Modifier
+                    .background(
+                        color = settingColors.container
+                    )
                     .clickable(
                         onClick = {
                             settingState.value = settingState.value.copy(
@@ -124,7 +136,8 @@ class SettingScopeImpl(
                     ) {
                         Icon(
                             painter = getIcon("chevron/chevron_right40"),
-                            contentDescription = null
+                            contentDescription = null,
+                            tint = settingColors.onContainer
                         )
                     }
 
@@ -142,16 +155,19 @@ class SettingScopeImpl(
 
                         Column {
                             Text(
-                                text = title.value,
+                                text = title,
                                 style = MaterialTheme.typography.bodyLarge,
                                 overflow = TextOverflow.Clip,
-                                maxLines = 2
+                                maxLines = 1,
+                                color = settingColors.onContainer
                             )
                             if (subTitle != null) {
                                 Text(
-                                    text = subTitle.value,
+                                    text = subTitle,
+                                    style = MaterialTheme.typography.bodyMedium,
                                     overflow = TextOverflow.Clip,
-                                    maxLines = 2
+                                    maxLines = 2,
+                                    color = settingColors.onContainer
                                 )
                             }
                         }
@@ -162,7 +178,8 @@ class SettingScopeImpl(
 
         Divider(
             modifier = Modifier.fillMaxWidth(),
-            thickness = 2.dp
+            thickness = 2.dp,
+            color = settingColors.onContainer
         )
     }
 
@@ -173,6 +190,9 @@ class SettingScopeImpl(
     ) {
         Row(
             modifier = Modifier
+                .background(
+                    color = settingColors.container
+                )
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -180,13 +200,14 @@ class SettingScopeImpl(
                 modifier = Modifier
                     .padding(start = 25.dp, top = 40.dp, bottom = 50.dp),
                 text = title,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
+                color = settingColors.onContainer
             )
         }
 
         Divider(
             modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.inverseOnSurface,
+            color = settingColors.onContainer,
             thickness = 2.dp
         )
     }

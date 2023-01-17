@@ -46,8 +46,8 @@ fun settingTest(
                     contentDescription = null
                 )
             },
-            title = mutableStateOf("translate"),
-            subTitle = language
+            title = "translate",
+            subTitle = language.value
         ) {
             advanceItem {
 

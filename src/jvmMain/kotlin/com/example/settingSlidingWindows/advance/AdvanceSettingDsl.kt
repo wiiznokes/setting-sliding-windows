@@ -1,4 +1,4 @@
-package com.example.settingSlidingWindows
+package com.example.settingSlidingWindows.advance
 
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
