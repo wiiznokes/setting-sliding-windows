@@ -22,19 +22,17 @@ class AdvanceSettingScopeImpl(
 
 
     override fun advanceItem(
-        sliderIcon: @Composable () -> Unit,
         content: LazyListScope.() -> Unit,
     ) {
         map[index] = {
             baseAdvanceItem(
-                sliderIcon = sliderIcon,
                 content = content
             )
         }
     }
 
 
-    override fun advanceItem(
+    override fun advanceItemPerso(
         content: @Composable () -> Unit,
     ) {
         map[index] = content
@@ -43,7 +41,6 @@ class AdvanceSettingScopeImpl(
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     private fun baseAdvanceItem(
-        sliderIcon: @Composable () -> Unit,
         content: LazyListScope.() -> Unit,
     ) {
         LazyColumn {
@@ -60,7 +57,10 @@ class AdvanceSettingScopeImpl(
                                 println("slider icon click -> isFistView = true")
                             }
                         ) {
-                            sliderIcon()
+                            Icon(
+                                painter = getIcon("chevron/chevron_left40"),
+                                contentDescription = null
+                            )
                         }
                         Text(
                             modifier = Modifier.align(Alignment.Center),

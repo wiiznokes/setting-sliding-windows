@@ -2,10 +2,7 @@ package com.example.settingSlidingWindows
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Divider
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -29,7 +26,6 @@ class SettingScopeImpl(
         icon: @Composable (() -> Unit)?,
         title: MutableState<String>,
         subTitle: MutableState<String>?,
-        sliderIcon: @Composable () -> Unit,
         advanceItemContent: (AdvanceSettingScope.() -> Unit)?,
     ) {
         val index = size
@@ -38,7 +34,6 @@ class SettingScopeImpl(
                 icon = icon,
                 title = title,
                 subTitle = subTitle,
-                sliderIcon = sliderIcon,
                 index = index
             )
         }
@@ -101,7 +96,6 @@ class SettingScopeImpl(
         icon: @Composable (() -> Unit)?,
         title: MutableState<String>,
         subTitle: MutableState<String>?,
-        sliderIcon: @Composable () -> Unit,
         index: Int,
     ) {
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
@@ -125,7 +119,10 @@ class SettingScopeImpl(
                             println("slider icon click -> currentIndex = $index")
                         }
                     ) {
-                        sliderIcon()
+                        Icon(
+                            painter = getIcon("chevron/chevron_right40"),
+                            contentDescription = null
+                        )
                     }
 
                     Row(

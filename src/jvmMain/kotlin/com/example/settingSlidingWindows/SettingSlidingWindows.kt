@@ -8,14 +8,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 
 
-private val map: MutableMap<Int, (@Composable () -> Unit)?> = mutableMapOf()
 
-private val list: MutableList<@Composable () -> Unit> = mutableListOf()
 
 @Composable
 fun setting(
     content: SettingScope.() -> Unit,
 ) {
+    val map: MutableMap<Int, (@Composable () -> Unit)?> = mutableMapOf()
+
+    val list: MutableList<@Composable () -> Unit> = mutableListOf()
 
     val isFistView = remember { mutableStateOf(true) }
     val currentIndex = remember { mutableStateOf(0) }

@@ -7,12 +7,11 @@ interface AdvanceSettingScope {
 
 
     fun advanceItem(
-        sliderIcon: @Composable () -> Unit,
         content: LazyListScope.() -> Unit,
     )
 
 
-    fun advanceItem(
+    fun advanceItemPerso(
         content: @Composable () -> Unit,
     )
 }

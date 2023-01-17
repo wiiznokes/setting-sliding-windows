@@ -18,8 +18,10 @@ kotlin {
     jvm()
     sourceSets {
         val jvmMain by getting {
+            resources.srcDirs("resources")
+
             dependencies {
-                api ("org.jetbrains.compose.material3:material3-desktop:1.2.1")
+                api ("org.jetbrains.compose.material3:material3-desktop:${extra["compose.version"] as String}")
             }
         }
         val jvmTest by getting {
