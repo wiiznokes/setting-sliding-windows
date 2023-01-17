@@ -1,6 +1,7 @@
 package com.example.settingSlidingWindows
 
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -41,12 +42,15 @@ data class SettingColors(
 data class SettingValue(
     val isFirstView: Boolean = true,
     val advanceIndex: Int = 0,
+    val scrollState: Int = 0
 )
 
 
 class SettingState(
     initialValue: SettingValue,
 ) {
+
+    internal val lazyListState = LazyListState(initialValue.scrollState)
 
     private val currentValue = mutableStateOf(initialValue)
     val isFirstView: Boolean
@@ -57,7 +61,7 @@ class SettingState(
 
 
     /**
-     * display the first view of setting
+     * close advance and return to the first one
      */
     fun close() {
         currentValue.value = currentValue.value.copy(
@@ -76,6 +80,7 @@ class SettingState(
             isFirstView = false
         )
     }
+
 }
 
 
@@ -114,10 +119,9 @@ fun Setting(
     content: SettingScope.() -> Unit,
 ) {
 
-
     val map: MutableMap<Int, (@Composable () -> Unit)?> = mutableMapOf()
-
     val list: MutableList<@Composable () -> Unit> = mutableListOf()
+
 
     val settingScopeImpl = SettingScopeImpl(
         map = map,
@@ -129,7 +133,8 @@ fun Setting(
 
     if (settingState.isFirstView) {
         LazyColumn(
-            modifier = modifier
+            modifier = modifier,
+            state = settingState.lazyListState
         ) {
             items(list) {
                 it()
@@ -141,7 +146,8 @@ fun Setting(
             contentFun()
         } else {
             LazyColumn(
-                modifier = modifier
+                modifier = modifier,
+                state = settingState.lazyListState
             ) {
                 items(list) {
                     it()
