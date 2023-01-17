@@ -17,12 +17,12 @@ interface SettingScope {
         icon: @Composable (() -> Unit)? = null,
         title: String,
         subTitle: String? = null,
-        advanceItemContent: (AdvanceSettingScope.() -> Unit)? = null,
+        advanceItemContent: (@Composable AdvanceSettingScope.() -> Unit)? = null,
     )
 
     fun item(
         content: @Composable (Int) -> Unit,
-        advanceItemContent: (AdvanceSettingScope.() -> Unit)? = null,
+        advanceItemContent: (@Composable AdvanceSettingScope.() -> Unit)? = null,
     )
 
     fun group(

@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 
-internal val Typography = Typography(
+internal val SettingTypo = Typography(
     // setting
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,

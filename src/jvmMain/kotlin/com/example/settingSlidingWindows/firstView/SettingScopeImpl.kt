@@ -3,7 +3,10 @@ package com.example.settingSlidingWindows.firstView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.MutableState
@@ -17,6 +20,7 @@ import com.example.settingSlidingWindows.SettingColors
 import com.example.settingSlidingWindows.SettingState
 import com.example.settingSlidingWindows.advance.AdvanceSettingScope
 import com.example.settingSlidingWindows.advance.AdvanceSettingScopeImpl
+import com.example.settingSlidingWindows.theme.SettingTypo
 import com.example.settingSlidingWindows.utils.getIcon
 
 internal class SettingScopeImpl(
@@ -61,7 +65,7 @@ internal class SettingScopeImpl(
                 modifier = Modifier
                     .padding(start = 25.dp, top = 40.dp, bottom = 50.dp),
                 text = title,
-                style = MaterialTheme.typography.titleLarge,
+                style = SettingTypo.titleLarge,
                 color = settingColors.onContainer
             )
         }
@@ -78,7 +82,7 @@ internal class SettingScopeImpl(
         icon: @Composable (() -> Unit)?,
         title: String,
         subTitle: String?,
-        advanceItemContent: (AdvanceSettingScope.() -> Unit)?
+        advanceItemContent: (@Composable AdvanceSettingScope.() -> Unit)?,
     ) {
         val index = size
         list.add {
@@ -89,16 +93,17 @@ internal class SettingScopeImpl(
                 index = index
             )
         }
-
-        val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
-            map = map,
-            settingState = settingState,
-            settingColors = settingColors,
-            index = index,
-            title = title
-        )
         if (advanceItemContent != null) {
-            advanceSettingScopeImpl.advanceItemContent()
+
+            val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
+                settingState = settingState,
+                _settingColors = settingColors,
+                _title = title
+            )
+
+            map[index] = {
+                advanceSettingScopeImpl.advanceItemContent()
+            }
         }
 
         size++
@@ -107,7 +112,7 @@ internal class SettingScopeImpl(
 
     override fun item(
         content: @Composable (Int) -> Unit,
-        advanceItemContent: (AdvanceSettingScope.() -> Unit)?,
+        advanceItemContent: (@Composable AdvanceSettingScope.() -> Unit)?,
     ) {
         val index = size
         list.add {
@@ -116,12 +121,12 @@ internal class SettingScopeImpl(
 
         if (advanceItemContent != null) {
             val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
-                map = map,
                 settingState = settingState,
-                settingColors = settingColors,
-                index = index
+                _settingColors = settingColors
             )
-            advanceSettingScopeImpl.advanceItemContent()
+            map[index] = {
+                advanceSettingScopeImpl.advanceItemContent()
+            }
         }
         size++
     }
@@ -184,7 +189,7 @@ internal class SettingScopeImpl(
                         Column {
                             Text(
                                 text = title,
-                                style = MaterialTheme.typography.bodyLarge,
+                                style = SettingTypo.bodyLarge,
                                 overflow = TextOverflow.Clip,
                                 maxLines = 1,
                                 color = settingColors.onContainer
@@ -192,7 +197,7 @@ internal class SettingScopeImpl(
                             if (subTitle != null) {
                                 Text(
                                     text = subTitle,
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = SettingTypo.bodyMedium,
                                     overflow = TextOverflow.Clip,
                                     maxLines = 2,
                                     color = settingColors.onContainer
@@ -226,11 +231,11 @@ internal class SettingScopeImpl(
 
     @Composable
     private fun baseGroup(
-        text: String
+        text: String,
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyLarge,
+            style = SettingTypo.bodyLarge,
             color = settingColors.onContainer,
             modifier = Modifier.padding(top = 25.dp, bottom = 5.dp)
         )

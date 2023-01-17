@@ -13,13 +13,14 @@ import com.example.settingSlidingWindows.firstView.SettingScope
 import com.example.settingSlidingWindows.firstView.SettingScopeImpl
 
 
+internal class SettingException(msg: String) : Exception(msg)
 
 object SettingDefaults {
 
     @Composable
     fun settingColors(
         container: Color = MaterialTheme.colorScheme.surface,
-        onContainer: Color = MaterialTheme.colorScheme.onSurface
+        onContainer: Color = MaterialTheme.colorScheme.onSurface,
     ): SettingColors = SettingColors(
         container = container,
         onContainer = onContainer
@@ -29,20 +30,19 @@ object SettingDefaults {
 
 data class SettingColors(
     val container: Color,
-    val onContainer: Color
+    val onContainer: Color,
 )
-
 
 
 data class SettingState(
     val isFistView: Boolean = true,
-    val advanceIndex: Int = 0
+    val advanceIndex: Int = 0,
 )
 
 @Composable
 fun rememberSettingState(
     initialValue: SettingState = SettingState(),
-    key: Any = Unit
+    key: Any = Unit,
 ): MutableState<SettingState> {
     return remember(key) {
         mutableStateOf(initialValue)
