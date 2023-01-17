@@ -97,7 +97,9 @@ internal class SettingScopeImpl(
             )
 
             map[index] = {
-                advanceSettingScopeImpl.advanceItemContent()
+                Column {
+                    advanceSettingScopeImpl.advanceItemContent()
+                }
             }
         }
 
