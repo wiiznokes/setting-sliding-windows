@@ -37,7 +37,8 @@ interface SettingScope {
     /**
      * Customizable item. You have to change the state of [SettingState]
      * if you want to open your advanceItemContent
-     * @param content Content of this item
+     * @param content Content of this item, Integer parameter represent
+     * the index of this setting, used for custom item with [SettingState]
      * @param advanceItemContent Content when we open this setting
      */
     fun item(

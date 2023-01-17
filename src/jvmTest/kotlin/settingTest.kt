@@ -51,9 +51,7 @@ fun settingTest(
             title = "translate",
             subTitle = language.value
         ) {
-
             Header(null, null)
-
 
             LazyColumn {
 
@@ -83,5 +81,26 @@ fun settingTest(
                 }
             }
         }
+
+        group("other")
+
+        item(
+            content = {
+                Text(
+                    text = "setting1",
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        )
+
+
+        item(
+            content = {
+                Text(
+                    text = "setting2",
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        )
     }
 }
