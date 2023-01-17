@@ -1,4 +1,4 @@
-package com.example.settingSlidingWindows.advance
+package com.example.settingSlidingWindows
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -7,19 +7,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.settingSlidingWindows.SettingColors
-import com.example.settingSlidingWindows.SettingException
-import com.example.settingSlidingWindows.SettingState
-import com.example.settingSlidingWindows.theme.SettingTypo
+import com.example.settingSlidingWindows.utils.SettingTypo
 import com.example.settingSlidingWindows.utils.getIcon
 
 
 internal class AdvanceSettingScopeImpl(
-    private val settingState: MutableState<SettingState>,
+    private val settingState: SettingState,
     private val _settingColors: SettingColors,
     private val _title: String? = null,
 ) : AdvanceSettingScope {
@@ -66,10 +62,7 @@ internal class AdvanceSettingScopeImpl(
             ) {
                 IconButton(
                     onClick = {
-                        settingState.value = settingState.value.copy(
-                            isFistView = true
-                        )
-                        println("slider icon click -> isFistView = true")
+                        settingState.close()
                     }
                 ) {
                     Icon(

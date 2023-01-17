@@ -1,4 +1,4 @@
-package com.example.settingSlidingWindows.theme
+package com.example.settingSlidingWindows.utils
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

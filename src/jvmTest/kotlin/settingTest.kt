@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.settingSlidingWindows.Setting
 import com.example.settingSlidingWindows.rememberSettingState
+import com.example.settingSlidingWindows.utils.getIcon
 
 @Suppress("EnumEntryName")
 enum class Languages {
@@ -25,7 +26,7 @@ enum class Languages {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun settingTest(
-    drawerState: DrawerState
+    drawerState: DrawerState,
 ) {
 
 
@@ -33,7 +34,9 @@ fun settingTest(
         mutableStateOf(Languages.en.name)
     }
 
-    Setting {
+    Setting(
+        settingState = rememberSettingState(key = drawerState.isOpen)
+    ) {
         header(
             title = "Setting"
         )

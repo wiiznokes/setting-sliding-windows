@@ -1,4 +1,4 @@
-package com.example.settingSlidingWindows.firstView
+package com.example.settingSlidingWindows
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,24 +9,19 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.example.settingSlidingWindows.SettingColors
-import com.example.settingSlidingWindows.SettingState
-import com.example.settingSlidingWindows.advance.AdvanceSettingScope
-import com.example.settingSlidingWindows.advance.AdvanceSettingScopeImpl
-import com.example.settingSlidingWindows.theme.SettingTypo
+import com.example.settingSlidingWindows.utils.SettingTypo
 import com.example.settingSlidingWindows.utils.getIcon
 
 internal class SettingScopeImpl(
     private val map: MutableMap<Int, (@Composable () -> Unit)?>,
     private val list: MutableList<@Composable () -> Unit>,
-    private val settingState: MutableState<SettingState>,
+    private val settingState: SettingState,
     private val settingColors: SettingColors,
 ) : SettingScope {
 
@@ -147,11 +142,7 @@ internal class SettingScopeImpl(
                     )
                     .clickable(
                         onClick = {
-                            settingState.value = settingState.value.copy(
-                                isFistView = false,
-                                advanceIndex = index
-                            )
-                            println("on click -> advanceIndex = $index")
+                            settingState.openAdvance(index)
                         }
                     ),
                 verticalAlignment = Alignment.CenterVertically
@@ -160,11 +151,7 @@ internal class SettingScopeImpl(
 
                     IconButton(
                         onClick = {
-                            settingState.value = settingState.value.copy(
-                                isFistView = false,
-                                advanceIndex = index
-                            )
-                            println("slider icon click -> advanceIndex = $index")
+                            settingState.openAdvance(index)
                         }
                     ) {
                         Icon(

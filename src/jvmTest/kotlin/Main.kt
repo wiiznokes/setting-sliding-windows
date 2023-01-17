@@ -7,7 +7,7 @@ import androidx.compose.ui.window.application
 
 
 @OptIn(ExperimentalMaterial3Api::class)
-fun main () = application {
+fun main() = application {
 
     Window(
         onCloseRequest = {

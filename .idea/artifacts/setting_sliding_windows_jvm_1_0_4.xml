@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="setting-sliding-windows-jvm-1.0.4">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="setting-sliding-windows-jvm-1.0.4.jar">
+      <element id="module-output" name="setting-sliding-windows.jvmMain" />
+    </root>
+  </artifact>
+</component>
