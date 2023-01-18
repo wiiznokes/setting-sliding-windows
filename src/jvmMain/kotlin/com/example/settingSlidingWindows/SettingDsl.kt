@@ -1,6 +1,8 @@
 package com.example.settingSlidingWindows
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.TextStyle
+import com.example.settingSlidingWindows.utils.SettingTypo
 
 interface SettingScope {
 
@@ -31,8 +33,10 @@ interface SettingScope {
     fun item(
         settingColors: SettingColors? = null,
         icon: @Composable (() -> Unit)? = null,
-        title: String,
+        title: String? = null,
+        titleStyle: TextStyle = SettingTypo.bodyLarge,
         subTitle: String? = null,
+        advanceIconButton: @Composable (() -> Unit)? = null,
         showTopLine: Boolean = false,
         advanceItemContent: (@Composable AdvanceSettingScope.() -> Unit)? = null,
     )
@@ -56,6 +60,7 @@ interface SettingScope {
      */
     fun group(
         text: String,
+        textStyle: TextStyle = SettingTypo.labelLarge
     )
 
     /**

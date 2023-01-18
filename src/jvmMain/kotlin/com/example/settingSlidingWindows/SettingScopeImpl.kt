@@ -12,6 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -69,11 +70,13 @@ internal class SettingScopeImpl(
 
     override fun item(
         settingColors: SettingColors?,
-        icon: @Composable (() -> Unit)?,
-        title: String,
+        icon: @Composable() (() -> Unit)?,
+        title: String?,
+        titleStyle: TextStyle,
         subTitle: String?,
+        advanceIconButton: @Composable() (() -> Unit)?,
         showTopLine: Boolean,
-        advanceItemContent: (@Composable AdvanceSettingScope.() -> Unit)?,
+        advanceItemContent: @Composable() (AdvanceSettingScope.() -> Unit)?
     ) {
         val index = size
         list.add {
@@ -81,7 +84,9 @@ internal class SettingScopeImpl(
                 settingColors = settingColors ?: _settingColors,
                 icon = icon,
                 title = title,
+                titleStyle = titleStyle,
                 subTitle = subTitle,
+                advanceIconButton = advanceIconButton,
                 index = index,
                 showTopLine = showTopLine
             )
@@ -136,8 +141,10 @@ internal class SettingScopeImpl(
     private fun baseItem(
         settingColors: SettingColors,
         icon: @Composable (() -> Unit)?,
-        title: String,
+        title: String?,
+        titleStyle: TextStyle,
         subTitle: String?,
+        advanceIconButton: @Composable (() -> Unit)?,
         index: Int,
         showTopLine: Boolean,
     ) {
@@ -164,16 +171,20 @@ internal class SettingScopeImpl(
             ) {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
 
-                    IconButton(
-                        onClick = {
-                            settingState.openAdvance(index)
+                    if (advanceIconButton != null) {
+                        advanceIconButton()
+                    } else {
+                        IconButton(
+                            onClick = {
+                                settingState.openAdvance(index)
+                            }
+                        ) {
+                            Icon(
+                                painter = getIcon("chevron/chevron_right40"),
+                                contentDescription = null,
+                                tint = settingColors.onContainer
+                            )
                         }
-                    ) {
-                        Icon(
-                            painter = getIcon("chevron/chevron_right40"),
-                            contentDescription = null,
-                            tint = settingColors.onContainer
-                        )
                     }
 
                     Row(
@@ -186,16 +197,18 @@ internal class SettingScopeImpl(
                             icon()
                             Spacer(modifier = Modifier.width(16.dp))
                         }
-                        size++
 
                         Column {
-                            Text(
-                                text = title,
-                                style = SettingTypo.bodyLarge,
-                                overflow = TextOverflow.Clip,
-                                maxLines = 1,
-                                color = settingColors.onContainer
-                            )
+                            if (title != null) {
+                                Text(
+                                    text = title,
+                                    style = titleStyle,
+                                    overflow = TextOverflow.Clip,
+                                    maxLines = 1,
+                                    color = settingColors.onContainer
+                                )
+                            }
+
                             if (subTitle != null) {
                                 Text(
                                     text = subTitle,
@@ -219,10 +232,14 @@ internal class SettingScopeImpl(
     }
 
 
-    override fun group(text: String) {
+    override fun group(
+        text: String,
+        textStyle: TextStyle
+    ) {
         list.add {
             baseGroup(
-                text = text
+                text = text,
+                textStyle = textStyle
             )
         }
     }
@@ -234,10 +251,11 @@ internal class SettingScopeImpl(
     @Composable
     private fun baseGroup(
         text: String,
+        textStyle: TextStyle
     ) {
         Text(
             text = text,
-            style = SettingTypo.bodyLarge,
+            style = textStyle,
             color = _settingColors.onContainer,
             modifier = Modifier.padding(top = 25.dp, bottom = 5.dp)
         )

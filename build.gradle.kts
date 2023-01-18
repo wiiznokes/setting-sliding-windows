@@ -5,13 +5,13 @@ plugins {
 }
 
 group = "com.example"
-version = "1.0.4"
+version = "2.0.1"
 
 repositories {
     google()
     mavenCentral()
-    maven("https://jitpack.io")
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    maven("https://jitpack.io")
 }
 
 kotlin {
