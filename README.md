@@ -1,5 +1,7 @@
 ## Library to make setting easily
 
+Hosted on [Jitpack](https://jitpack.io/#wiiznokes/setting-sliding-windows)
+
 ### Install
 
 Groovy
