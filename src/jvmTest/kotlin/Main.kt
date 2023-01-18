@@ -19,7 +19,7 @@ fun main() = application {
 
         ModalNavigationDrawer(
             drawerContent = {
-                settingTest(
+                SettingTest(
                     drawerState = drawerState
                 )
             },

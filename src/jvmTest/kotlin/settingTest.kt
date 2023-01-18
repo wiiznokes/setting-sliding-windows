@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -12,35 +13,37 @@ import com.example.settingSlidingWindows.Setting
 import com.example.settingSlidingWindows.rememberSettingState
 import com.example.settingSlidingWindows.utils.getIcon
 
-@Suppress("EnumEntryName")
-enum class Languages {
-    en,
-    fr;
 
-    companion object {
-        infix fun from(value: String): Languages = Languages.values().first { it.name == value }
-    }
+enum class Languages {
+    EN,
+    FR,
+    DR,
+    FL
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun settingTest(
+fun SettingTest(
     drawerState: DrawerState,
 ) {
 
 
-    val language = remember {
-        mutableStateOf(Languages.en.name)
-    }
-
+    // entry point of the library
     Setting(
         settingState = rememberSettingState(key = drawerState.isOpen)
     ) {
+        // display header (From DSL)
         header(
             title = "Setting"
         )
 
+        // current language used
+        val language = remember {
+            mutableStateOf(Languages.EN)
+        }
+
+        // (From DSL)
         item(
             icon = {
                 Icon(
@@ -49,41 +52,24 @@ fun settingTest(
                 )
             },
             title = "translate",
-            subTitle = language.value
+            subTitle = language.value.name
         ) {
-            Header(null, null)
+            // content displayed when we click on the setting
 
-            LazyColumn {
+            // displayed header (parameter optional because already know)
+            // include a button to go back
+            // (From DSL)
+            Header(title = null , settingColors = null)
 
-                items(Languages.values()) {
-                    Column {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    language.value = it.toString()
-                                }
-                        ) {
-                            Text(
-                                text = it.toString(),
-                                modifier = Modifier.padding(16.dp)
-                            )
-                        }
-                        Divider(
-                            modifier = Modifier.fillMaxWidth(),
-                            color = MaterialTheme.colorScheme.inverseOnSurface,
-                            thickness = 2.dp
-                        )
-                    }
-                }
-                item {
-                    Spacer(Modifier.height(80.dp))
-                }
-            }
+            // display a list of language
+            LanguageAdvanceSetting(language)
         }
 
+        // (From DSL)
+        // display a subtitle to distinguish related items
         group("other")
 
+        // (From DSL)
         item(
             content = {
                 Text(
@@ -93,7 +79,7 @@ fun settingTest(
             }
         )
 
-
+        // (From DSL)
         item(
             content = {
                 Text(
@@ -102,5 +88,37 @@ fun settingTest(
                 )
             }
         )
+    }
+}
+
+@Composable
+private fun LanguageAdvanceSetting (
+    language: MutableState<Languages>
+) {
+    LazyColumn {
+        items(Languages.values()) {
+            Column {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            language.value = it
+                        }
+                ) {
+                    Text(
+                        text = it.toString(),
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                Divider(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.inverseOnSurface,
+                    thickness = 2.dp
+                )
+            }
+        }
+        item {
+            Spacer(Modifier.height(80.dp))
+        }
     }
 }
