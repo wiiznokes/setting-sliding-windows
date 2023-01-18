@@ -28,6 +28,10 @@ fun SettingTest(
     drawerState: DrawerState,
 ) {
 
+    // current language used
+    val language = remember {
+        mutableStateOf(Languages.EN)
+    }
 
     // entry point of the library
     Setting(
@@ -38,11 +42,6 @@ fun SettingTest(
             title = "Setting"
         )
 
-        // current language used
-        val language = remember {
-            mutableStateOf(Languages.EN)
-        }
-
         // (From DSL)
         item(
             icon = {
@@ -52,7 +51,8 @@ fun SettingTest(
                 )
             },
             title = "translate",
-            subTitle = language.value.name
+            subTitle = language.value.name,
+            showTopLine = true
         ) {
             // content displayed when we click on the setting
 
