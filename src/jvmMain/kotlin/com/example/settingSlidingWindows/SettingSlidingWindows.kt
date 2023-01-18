@@ -2,7 +2,9 @@ package com.example.settingSlidingWindows
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -119,7 +121,8 @@ fun rememberSettingState(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Setting(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
+        .fillMaxSize(),
     settingState: SettingState = rememberSettingState(),
     settingColors: SettingColors = SettingDefaults.settingColors(),
     content: SettingScope.() -> Unit,
@@ -168,7 +171,9 @@ fun Setting(
             )
         } else {
             val contentFun = map[settingState.advanceIndex]
-            contentFun!!()
+            Box(modifier) {
+                contentFun?.invoke()
+            }
         }
     }
 }

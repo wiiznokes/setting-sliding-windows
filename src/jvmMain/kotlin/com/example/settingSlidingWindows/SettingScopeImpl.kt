@@ -87,7 +87,6 @@ internal class SettingScopeImpl(
             )
         }
         if (advanceItemContent != null) {
-
             val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
                 settingState = settingState,
                 _settingColors = _settingColors,
@@ -99,6 +98,9 @@ internal class SettingScopeImpl(
                     advanceSettingScopeImpl.advanceItemContent()
                 }
             }
+        }
+        else {
+            map[index] = null
         }
 
         size++
@@ -122,6 +124,9 @@ internal class SettingScopeImpl(
             map[index] = {
                 advanceSettingScopeImpl.advanceItemContent()
             }
+        }
+        else {
+            map[index] = null
         }
         size++
     }
