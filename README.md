@@ -1,5 +1,3 @@
-# setting-sliding-windows
-
 ## Library to make setting easily
 
 ### Install
