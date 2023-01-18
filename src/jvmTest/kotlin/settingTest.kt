@@ -59,7 +59,7 @@ fun SettingTest(
             // displayed header (parameter optional because already know)
             // include a button to go back
             // (From DSL)
-            Header(title = null , settingColors = null)
+            Header(title = null, settingColors = null)
 
             // display a list of language
             LanguageAdvanceSetting(language)
@@ -92,8 +92,8 @@ fun SettingTest(
 }
 
 @Composable
-private fun LanguageAdvanceSetting (
-    language: MutableState<Languages>
+private fun LanguageAdvanceSetting(
+    language: MutableState<Languages>,
 ) {
     LazyColumn {
         items(Languages.values()) {

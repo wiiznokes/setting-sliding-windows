@@ -10,7 +10,7 @@ version = "1.0.4"
 repositories {
     google()
     mavenCentral()
-    maven ( "https://jitpack.io")
+    maven("https://jitpack.io")
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
@@ -21,7 +21,7 @@ kotlin {
             resources.srcDirs("resources")
 
             dependencies {
-                api ("org.jetbrains.compose.material3:material3-desktop:${extra["compose.version"] as String}")
+                api("org.jetbrains.compose.material3:material3-desktop:${extra["compose.version"] as String}")
             }
         }
         val jvmTest by getting {

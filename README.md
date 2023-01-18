@@ -3,6 +3,7 @@
 ### Install
 
 Groovy
+
 ```
 allprojects {
     repositories {
@@ -19,6 +20,7 @@ dependencies {
 ```
 
 Kotlin
+
 ```
 repositories {
     ...
@@ -34,4 +36,5 @@ dependencies {
 
 This lib use material 3
 
-An example on how to use it can be found [here](https://github.com/wiiznokes/setting-sliding-windows/blob/master/src/jvmTest/kotlin/settingTest.kt)
+An example on how to use it can be
+found [here](https://github.com/wiiznokes/setting-sliding-windows/blob/master/src/jvmTest/kotlin/settingTest.kt)

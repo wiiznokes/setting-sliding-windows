@@ -45,7 +45,7 @@ data class SettingColors(
 data class SettingValue(
     val isFirstView: Boolean = true,
     val advanceIndex: Int = 0,
-    val scrollState: Int = 0
+    val scrollState: Int = 0,
 )
 
 
@@ -158,7 +158,7 @@ fun Setting(
 private fun BaseFirstView(
     modifier: Modifier = Modifier,
     settingState: SettingState = rememberSettingState(),
-    list: MutableList<@Composable () -> Unit>
+    list: MutableList<@Composable () -> Unit>,
 ) {
     LazyColumn(
         modifier = modifier,

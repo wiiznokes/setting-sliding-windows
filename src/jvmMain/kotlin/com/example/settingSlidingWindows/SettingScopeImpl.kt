@@ -72,6 +72,7 @@ internal class SettingScopeImpl(
         icon: @Composable (() -> Unit)?,
         title: String,
         subTitle: String?,
+        showTopLine: Boolean,
         advanceItemContent: (@Composable AdvanceSettingScope.() -> Unit)?,
     ) {
         val index = size
@@ -81,7 +82,8 @@ internal class SettingScopeImpl(
                 icon = icon,
                 title = title,
                 subTitle = subTitle,
-                index = index
+                index = index,
+                showTopLine = showTopLine
             )
         }
         if (advanceItemContent != null) {
@@ -132,12 +134,15 @@ internal class SettingScopeImpl(
         title: String,
         subTitle: String?,
         index: Int,
+        showTopLine: Boolean,
     ) {
-        Divider(
-            modifier = Modifier.fillMaxWidth(),
-            color = settingColors.onContainer,
-            thickness = 2.dp
-        )
+        if (showTopLine) {
+            Divider(
+                modifier = Modifier.fillMaxWidth(),
+                color = settingColors.onContainer,
+                thickness = 2.dp
+            )
+        }
 
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             Row(

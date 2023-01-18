@@ -1,7 +1,6 @@
 package com.example.settingSlidingWindows
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 
 interface SettingScope {
 
@@ -26,6 +25,7 @@ interface SettingScope {
      * @param icon Icon displayed of the left
      * @param title Title displayed of the middle top
      * @param subTitle Subtitle displayed of the bottom
+     * @param showTopLine Should show top line
      * @param advanceItemContent Content when we open this setting
      */
     fun item(
@@ -33,6 +33,7 @@ interface SettingScope {
         icon: @Composable (() -> Unit)? = null,
         title: String,
         subTitle: String? = null,
+        showTopLine: Boolean = false,
         advanceItemContent: (@Composable AdvanceSettingScope.() -> Unit)? = null,
     )
 
