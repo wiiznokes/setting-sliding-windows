@@ -38,9 +38,7 @@ fun SettingTest(
         settingState = rememberSettingState(key = drawerState.isOpen)
     ) {
         // display header (From DSL)
-        header(
-            title = "Setting"
-        )
+        header(title = "Setting")
 
         // (From DSL)
         item(
