@@ -1,6 +1,8 @@
 ## Library to make setting easily
 
 ### Install
+
+Groovy
 ```
 allprojects {
     repositories {
@@ -13,6 +15,20 @@ allprojects {
 ```
 dependencies {
     implementation 'com.github.wiiznokes:setting-sliding-windows:1.0.4'
+}
+```
+
+Kotlin
+```
+repositories {
+    ...
+    maven("https://jitpack.io")
+}
+```
+
+```
+dependencies {
+    implementation("com.github.wiiznokes:setting-sliding-windows:1.0.4")
 }
 ```
 
