@@ -64,12 +64,6 @@ internal class SettingScopeImpl(
                 color = _settingColors.onContainer
             )
         }
-
-        Divider(
-            modifier = Modifier.fillMaxWidth(),
-            color = _settingColors.onContainer,
-            thickness = 2.dp
-        )
     }
 
 
@@ -139,6 +133,11 @@ internal class SettingScopeImpl(
         subTitle: String?,
         index: Int,
     ) {
+        Divider(
+            modifier = Modifier.fillMaxWidth(),
+            color = settingColors.onContainer,
+            thickness = 2.dp
+        )
 
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             Row(
@@ -205,7 +204,7 @@ internal class SettingScopeImpl(
         Divider(
             modifier = Modifier.fillMaxWidth(),
             thickness = 2.dp,
-            color = _settingColors.onContainer
+            color = settingColors.onContainer
         )
     }
 
@@ -231,11 +230,6 @@ internal class SettingScopeImpl(
             style = SettingTypo.bodyLarge,
             color = _settingColors.onContainer,
             modifier = Modifier.padding(top = 25.dp, bottom = 5.dp)
-        )
-        Divider(
-            modifier = Modifier.fillMaxWidth(),
-            color = _settingColors.onContainer,
-            thickness = 2.dp
         )
     }
 
