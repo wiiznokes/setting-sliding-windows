@@ -112,7 +112,7 @@ fun rememberSettingState(
  * displayed
  * @param settingState State of setting, used to make custom items
  * @param settingColors Colors of setting
- * @param content DSL (Domain Specific Language
+ * @param content DSL (Domain Specific Language)
  */
 @Composable
 fun Setting(
