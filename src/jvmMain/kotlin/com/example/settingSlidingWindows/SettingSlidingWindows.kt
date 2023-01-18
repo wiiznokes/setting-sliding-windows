@@ -1,5 +1,7 @@
 package com.example.settingSlidingWindows
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
@@ -114,6 +116,7 @@ fun rememberSettingState(
  * @param settingColors Colors of setting
  * @param content DSL (Domain Specific Language)
  */
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Setting(
     modifier: Modifier = Modifier,
@@ -134,25 +137,42 @@ fun Setting(
     )
     settingScopeImpl.content()
 
-    if (settingState.isFirstView) {
-        BaseFirstView(
-            modifier = modifier,
-            settingState = settingState,
-            list = list
-        )
-    } else {
-        val contentFun = map[settingState.advanceIndex]
-        if (contentFun != null) {
-            contentFun()
-        } else {
+    val isFirstView = when (settingState.isFirstView) {
+        true -> true
+        false -> {
+            if (map.size > settingState.advanceIndex) {
+                map[settingState.advanceIndex] == null
+            } else true
+        }
+    }
+
+    AnimatedContent(
+        targetState = isFirstView,
+        transitionSpec = {
+            slideInHorizontally(
+                initialOffsetX = {
+                    if (isFirstView) -it else it
+                }
+            ) with slideOutHorizontally(
+                targetOffsetX = {
+                    if (isFirstView) it else -it
+                }
+            )
+        }
+    ) {
+        if (it) {
             BaseFirstView(
                 modifier = modifier,
                 settingState = settingState,
                 list = list
             )
+        } else {
+            val contentFun = map[settingState.advanceIndex]
+            contentFun!!()
         }
     }
 }
+
 
 @Composable
 private fun BaseFirstView(
