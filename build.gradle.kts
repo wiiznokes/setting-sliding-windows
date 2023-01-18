@@ -29,7 +29,6 @@ kotlin {
 
             dependencies {
                 implementation(compose.desktop.currentOs)
-                implementation("org.jetbrains.compose.material3:material3-desktop:${extra["compose.version"] as String}")
                 implementation(kotlin("test"))
             }
         }
