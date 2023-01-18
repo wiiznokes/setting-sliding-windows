@@ -58,7 +58,7 @@ internal class AdvanceSettingScopeImpl(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
-                modifier = Modifier.fillMaxWidth().padding(16.dp)
+                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
             ) {
                 IconButton(
                     onClick = {

@@ -22,7 +22,7 @@ internal class SettingScopeImpl(
     private val map: MutableMap<Int, (@Composable () -> Unit)?>,
     private val list: MutableList<@Composable () -> Unit>,
     private val settingState: SettingState,
-    private val settingColors: SettingColors,
+    private val _settingColors: SettingColors,
 ) : SettingScope {
 
     private var size = 0
@@ -51,7 +51,7 @@ internal class SettingScopeImpl(
         Row(
             modifier = Modifier
                 .background(
-                    color = settingColors.container
+                    color = _settingColors.container
                 )
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -61,19 +61,20 @@ internal class SettingScopeImpl(
                     .padding(start = 25.dp, top = 40.dp, bottom = 50.dp),
                 text = title,
                 style = SettingTypo.titleLarge,
-                color = settingColors.onContainer
+                color = _settingColors.onContainer
             )
         }
 
         Divider(
             modifier = Modifier.fillMaxWidth(),
-            color = settingColors.onContainer,
+            color = _settingColors.onContainer,
             thickness = 2.dp
         )
     }
 
 
     override fun item(
+        settingColors: SettingColors?,
         icon: @Composable (() -> Unit)?,
         title: String,
         subTitle: String?,
@@ -82,6 +83,7 @@ internal class SettingScopeImpl(
         val index = size
         list.add {
             baseItem(
+                settingColors = settingColors ?: _settingColors,
                 icon = icon,
                 title = title,
                 subTitle = subTitle,
@@ -92,7 +94,7 @@ internal class SettingScopeImpl(
 
             val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
                 settingState = settingState,
-                _settingColors = settingColors,
+                _settingColors = _settingColors,
                 _title = title
             )
 
@@ -119,7 +121,7 @@ internal class SettingScopeImpl(
         if (advanceItemContent != null) {
             val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
                 settingState = settingState,
-                _settingColors = settingColors
+                _settingColors = _settingColors
             )
             map[index] = {
                 advanceSettingScopeImpl.advanceItemContent()
@@ -131,11 +133,13 @@ internal class SettingScopeImpl(
 
     @Composable
     private fun baseItem(
+        settingColors: SettingColors,
         icon: @Composable (() -> Unit)?,
         title: String,
         subTitle: String?,
         index: Int,
     ) {
+
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             Row(
                 modifier = Modifier
@@ -201,7 +205,7 @@ internal class SettingScopeImpl(
         Divider(
             modifier = Modifier.fillMaxWidth(),
             thickness = 2.dp,
-            color = settingColors.onContainer
+            color = _settingColors.onContainer
         )
     }
 
@@ -225,12 +229,12 @@ internal class SettingScopeImpl(
         Text(
             text = text,
             style = SettingTypo.bodyLarge,
-            color = settingColors.onContainer,
+            color = _settingColors.onContainer,
             modifier = Modifier.padding(top = 25.dp, bottom = 5.dp)
         )
         Divider(
             modifier = Modifier.fillMaxWidth(),
-            color = settingColors.onContainer,
+            color = _settingColors.onContainer,
             thickness = 2.dp
         )
     }

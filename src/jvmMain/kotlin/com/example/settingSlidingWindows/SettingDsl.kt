@@ -1,6 +1,7 @@
 package com.example.settingSlidingWindows
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 
 interface SettingScope {
 
@@ -28,6 +29,7 @@ interface SettingScope {
      * @param advanceItemContent Content when we open this setting
      */
     fun item(
+        settingColors: SettingColors? = null,
         icon: @Composable (() -> Unit)? = null,
         title: String,
         subTitle: String? = null,
