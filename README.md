@@ -15,3 +15,5 @@ dependencies {
     implementation 'com.github.wiiznokes:setting-sliding-windows:1.0.4'
 }
 ```
+
+This lib use material 3
