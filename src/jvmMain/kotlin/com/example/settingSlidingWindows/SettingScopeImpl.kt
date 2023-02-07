@@ -12,11 +12,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.example.settingSlidingWindows.utils.SettingTypo
 import com.example.settingSlidingWindows.utils.getIcon
 
 internal class SettingScopeImpl(
@@ -24,6 +22,7 @@ internal class SettingScopeImpl(
     private val list: MutableList<@Composable () -> Unit>,
     private val settingState: SettingState,
     private val _settingColors: SettingColors,
+    private val settingTextStyle: SettingTextStyle,
 ) : SettingScope {
 
     private var size = 0
@@ -59,9 +58,9 @@ internal class SettingScopeImpl(
         ) {
             Text(
                 modifier = Modifier
-                    .padding(start = 25.dp, top = 40.dp, bottom = 50.dp),
+                    .padding(start = 25.dp, top = 40.dp, bottom = 40.dp),
                 text = title,
-                style = SettingTypo.titleLarge,
+                style = settingTextStyle.headerStyle,
                 color = _settingColors.onContainer
             )
         }
@@ -70,13 +69,12 @@ internal class SettingScopeImpl(
 
     override fun item(
         settingColors: SettingColors?,
-        icon: @Composable() (() -> Unit)?,
+        icon: @Composable (() -> Unit)?,
         title: String?,
-        titleStyle: TextStyle,
         subTitle: String?,
-        advanceIconButton: @Composable() (() -> Unit)?,
+        advanceIconButton: @Composable (() -> Unit)?,
         showTopLine: Boolean,
-        advanceItemContent: @Composable() (AdvanceSettingScope.() -> Unit)?
+        advanceItemContent: @Composable (AdvanceSettingScope.() -> Unit)?,
     ) {
         val index = size
         list.add {
@@ -84,7 +82,6 @@ internal class SettingScopeImpl(
                 settingColors = settingColors ?: _settingColors,
                 icon = icon,
                 title = title,
-                titleStyle = titleStyle,
                 subTitle = subTitle,
                 advanceIconButton = advanceIconButton,
                 index = index,
@@ -95,6 +92,7 @@ internal class SettingScopeImpl(
             val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
                 settingState = settingState,
                 _settingColors = _settingColors,
+                settingTextStyle = settingTextStyle,
                 _title = title
             )
 
@@ -103,8 +101,7 @@ internal class SettingScopeImpl(
                     advanceSettingScopeImpl.advanceItemContent()
                 }
             }
-        }
-        else {
+        } else {
             map[index] = null
         }
 
@@ -124,13 +121,13 @@ internal class SettingScopeImpl(
         if (advanceItemContent != null) {
             val advanceSettingScopeImpl = AdvanceSettingScopeImpl(
                 settingState = settingState,
-                _settingColors = _settingColors
+                _settingColors = _settingColors,
+                settingTextStyle = settingTextStyle
             )
             map[index] = {
                 advanceSettingScopeImpl.advanceItemContent()
             }
-        }
-        else {
+        } else {
             map[index] = null
         }
         size++
@@ -142,7 +139,6 @@ internal class SettingScopeImpl(
         settingColors: SettingColors,
         icon: @Composable (() -> Unit)?,
         title: String?,
-        titleStyle: TextStyle,
         subTitle: String?,
         advanceIconButton: @Composable (() -> Unit)?,
         index: Int,
@@ -175,12 +171,10 @@ internal class SettingScopeImpl(
                         advanceIconButton()
                     } else {
                         IconButton(
-                            onClick = {
-                                settingState.openAdvance(index)
-                            }
+                            onClick = { settingState.openAdvance(index) }
                         ) {
                             Icon(
-                                painter = getIcon("chevron/chevron_right40"),
+                                painter = getIcon("chevron/chevron_right${SettingDefaults.iconSize}"),
                                 contentDescription = null,
                                 tint = settingColors.onContainer
                             )
@@ -190,29 +184,38 @@ internal class SettingScopeImpl(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
+                            .padding(start = SettingDefaults.mediumPadding, end = SettingDefaults.smallPadding)
+                            .padding(bottom = SettingDefaults.smallPadding),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         if (icon != null) {
                             icon()
-                            Spacer(modifier = Modifier.width(16.dp))
+                            Spacer(modifier = Modifier.width(SettingDefaults.mediumPadding))
                         }
 
-                        Column {
+                        Column(
+                            verticalArrangement = Arrangement.Center
+                        ) {
                             if (title != null) {
                                 Text(
                                     text = title,
-                                    style = titleStyle,
+                                    style = settingTextStyle.itemTitleStyle,
                                     overflow = TextOverflow.Clip,
                                     maxLines = 1,
                                     color = settingColors.onContainer
                                 )
                             }
+                            /*
+                            if (title != null && subTitle != null) {
+                                Spacer(Modifier.height(SettingDefaults.smallPadding))
+                            }
+
+                             */
 
                             if (subTitle != null) {
                                 Text(
                                     text = subTitle,
-                                    style = SettingTypo.bodyMedium,
+                                    style = settingTextStyle.itemSubTitleStyle,
                                     overflow = TextOverflow.Clip,
                                     maxLines = 2,
                                     color = settingColors.onContainer
@@ -234,12 +237,12 @@ internal class SettingScopeImpl(
 
     override fun group(
         text: String,
-        textStyle: TextStyle
+        settingColors: SettingColors?,
     ) {
         list.add {
             baseGroup(
                 text = text,
-                textStyle = textStyle
+                settingColors = settingColors ?: _settingColors,
             )
         }
     }
@@ -251,13 +254,21 @@ internal class SettingScopeImpl(
     @Composable
     private fun baseGroup(
         text: String,
-        textStyle: TextStyle
+        settingColors: SettingColors,
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(settingColors.container)
+        ) {
+
+        }
         Text(
             text = text,
-            style = textStyle,
-            color = _settingColors.onContainer,
-            modifier = Modifier.padding(top = 25.dp, bottom = 5.dp)
+            style = settingTextStyle.groupStyle,
+            color = settingColors.onContainer,
+            modifier = Modifier
+                .padding(top = SettingDefaults.largePadding, bottom = SettingDefaults.smallPadding)
         )
     }
 

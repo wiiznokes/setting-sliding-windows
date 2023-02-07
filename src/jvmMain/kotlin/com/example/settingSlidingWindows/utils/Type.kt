@@ -12,7 +12,7 @@ internal val SettingTypo = Typography(
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
-        fontSize = 50.sp,
+        fontSize = 40.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
@@ -29,7 +29,7 @@ internal val SettingTypo = Typography(
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.W600,
-        fontSize = 21.sp,
+        fontSize = 18.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
@@ -37,7 +37,7 @@ internal val SettingTypo = Typography(
     bodyMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.W300,
-        fontSize = 18.sp,
+        fontSize = 15.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
@@ -46,7 +46,7 @@ internal val SettingTypo = Typography(
     labelLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.W200,
-        fontSize = 22.sp,
+        fontSize = 11.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     )

@@ -15,6 +15,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 
 
@@ -37,12 +41,43 @@ object SettingDefaults {
         container = container,
         onContainer = onContainer
     )
+
+    @OptIn(ExperimentalUnitApi::class)
+    @Composable
+    fun settingTextStyle(
+        headerStyle: TextStyle = MaterialTheme.typography.titleLarge,
+        groupStyle: TextStyle = MaterialTheme.typography.labelMedium,
+        itemTitleStyle: TextStyle = MaterialTheme.typography.bodyMedium,
+        itemSubTitleStyle: TextStyle = MaterialTheme.typography.bodySmall.copy(
+            lineHeight = TextUnit(5f, TextUnitType.Sp),
+        ),
+        advanceItemHeaderStyle: TextStyle = MaterialTheme.typography.titleMedium,
+    ): SettingTextStyle = SettingTextStyle(
+        headerStyle = headerStyle,
+        groupStyle = groupStyle,
+        itemTitleStyle = itemTitleStyle,
+        itemSubTitleStyle = itemSubTitleStyle,
+        advanceItemHeaderStyle = advanceItemHeaderStyle
+    )
+
+    const val iconSize = 24
+    val smallPadding = 5.dp
+    val mediumPadding = 10.dp
+    val largePadding = 15.dp
 }
 
 
 data class SettingColors(
     val container: Color,
     val onContainer: Color,
+)
+
+data class SettingTextStyle(
+    val headerStyle: TextStyle,
+    val groupStyle: TextStyle,
+    val itemTitleStyle: TextStyle,
+    val itemSubTitleStyle: TextStyle,
+    val advanceItemHeaderStyle: TextStyle,
 )
 
 
@@ -121,10 +156,11 @@ fun rememberSettingState(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Setting(
-    modifier: Modifier = Modifier
-        .fillMaxSize(),
     settingState: SettingState = rememberSettingState(),
     settingColors: SettingColors = SettingDefaults.settingColors(),
+    modifier: Modifier = Modifier
+        .fillMaxSize(),
+    settingTextStyle: SettingTextStyle = SettingDefaults.settingTextStyle(),
     content: SettingScope.() -> Unit,
 ) {
 
@@ -136,7 +172,8 @@ fun Setting(
         map = map,
         list = list,
         settingState = settingState,
-        _settingColors = settingColors
+        _settingColors = settingColors,
+        settingTextStyle = settingTextStyle
     )
     settingScopeImpl.content()
 

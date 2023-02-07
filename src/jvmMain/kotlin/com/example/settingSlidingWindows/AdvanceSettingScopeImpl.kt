@@ -10,13 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.settingSlidingWindows.utils.SettingTypo
 import com.example.settingSlidingWindows.utils.getIcon
 
 
 internal class AdvanceSettingScopeImpl(
     private val settingState: SettingState,
     private val _settingColors: SettingColors,
+    private val settingTextStyle: SettingTextStyle,
     private val _title: String? = null,
 ) : AdvanceSettingScope {
 
@@ -58,7 +58,7 @@ internal class AdvanceSettingScopeImpl(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(vertical = SettingDefaults.largePadding)
             ) {
                 IconButton(
                     onClick = {
@@ -66,14 +66,14 @@ internal class AdvanceSettingScopeImpl(
                     }
                 ) {
                     Icon(
-                        painter = getIcon("chevron/chevron_left40"),
+                        painter = getIcon("chevron/chevron_left${SettingDefaults.iconSize}"),
                         contentDescription = null,
                         tint = settingColors.onContainer
                     )
                 }
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    style = SettingTypo.titleMedium,
+                    style = settingTextStyle.advanceItemHeaderStyle,
                     color = settingColors.onContainer,
                     text = title
                 )
