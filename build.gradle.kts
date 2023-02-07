@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.example"
-version = "2.0.1"
+version = "1.3.0"
 
 repositories {
     google()
