@@ -24,7 +24,7 @@ enum class Languages {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingTest(
+fun settingTest(
     drawerState: DrawerState,
 ) {
 
@@ -35,6 +35,7 @@ fun SettingTest(
 
     // entry point of the library
     Setting(
+        modifier = Modifier.width(200.dp).fillMaxHeight(),
         settingState = rememberSettingState(key = drawerState.isOpen)
     ) {
         // display header (From DSL)
@@ -60,7 +61,7 @@ fun SettingTest(
             Header(title = null, settingColors = null)
 
             // display a list of language
-            LanguageAdvanceSetting(language)
+            languageAdvanceSetting(language)
         }
 
         // (From DSL)
@@ -90,7 +91,7 @@ fun SettingTest(
 }
 
 @Composable
-private fun LanguageAdvanceSetting(
+private fun languageAdvanceSetting(
     language: MutableState<Languages>,
 ) {
     LazyColumn {

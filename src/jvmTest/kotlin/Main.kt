@@ -1,7 +1,10 @@
+import androidx.compose.foundation.background
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
@@ -18,8 +21,9 @@ fun main() = application {
         val drawerState = rememberDrawerState(DrawerValue.Closed)
 
         ModalNavigationDrawer(
+            modifier = Modifier.background(Color.Cyan),
             drawerContent = {
-                SettingTest(
+                settingTest(
                     drawerState = drawerState
                 )
             },

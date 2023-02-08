@@ -261,15 +261,14 @@ internal class SettingScopeImpl(
                 .fillMaxWidth()
                 .background(settingColors.container)
         ) {
-
+            Text(
+                text = text,
+                style = settingTextStyle.groupStyle,
+                color = settingColors.onContainer,
+                modifier = Modifier
+                    .padding(top = SettingDefaults.largePadding, bottom = SettingDefaults.smallPadding)
+            )
         }
-        Text(
-            text = text,
-            style = settingTextStyle.groupStyle,
-            color = settingColors.onContainer,
-            modifier = Modifier
-                .padding(top = SettingDefaults.largePadding, bottom = SettingDefaults.smallPadding)
-        )
     }
 
 }

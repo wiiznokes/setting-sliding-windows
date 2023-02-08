@@ -14,6 +14,7 @@ interface SettingScope {
 
     /**
      * Header of the first view windows
+     * @param content
      */
     fun header(
         content: @Composable () -> Unit,
@@ -22,9 +23,11 @@ interface SettingScope {
 
     /**
      * Premake item, witch handle slide interaction
+     * @param settingColors
      * @param icon Icon displayed of the left
      * @param title Title displayed of the middle top
      * @param subTitle Subtitle displayed of the bottom
+     * @param advanceIconButton
      * @param showTopLine Should show top line
      * @param advanceItemContent Content when we open this setting
      */
@@ -54,6 +57,7 @@ interface SettingScope {
      * Premake separator of setting, there will be a space
      * and a subtitle
      * @param text Text witch will be displayed
+     * @param settingColors
      */
     fun group(
         text: String,
@@ -62,6 +66,7 @@ interface SettingScope {
 
     /**
      * Customisable group of setting
+     * @param content
      */
     fun group(
         content: @Composable () -> Unit,

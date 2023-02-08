@@ -2,6 +2,7 @@ package com.example.settingSlidingWindows
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,9 +38,11 @@ object SettingDefaults {
     fun settingColors(
         container: Color = MaterialTheme.colorScheme.surface,
         onContainer: Color = MaterialTheme.colorScheme.onSurface,
+        background: Color = MaterialTheme.colorScheme.background
     ): SettingColors = SettingColors(
         container = container,
-        onContainer = onContainer
+        onContainer = onContainer,
+        background = background
     )
 
     @OptIn(ExperimentalUnitApi::class)
@@ -70,6 +73,7 @@ object SettingDefaults {
 data class SettingColors(
     val container: Color,
     val onContainer: Color,
+    val background: Color
 )
 
 data class SettingTextStyle(
@@ -147,10 +151,11 @@ fun rememberSettingState(
  * declared in content params. A DSL [SettingScope] is provided,
  * and provide premake function that you can use to construct
  * a beautiful setting sliding windows !
- * @param modifier Modifier of the LazyList where items are
- * displayed
  * @param settingState State of setting, used to make custom items
  * @param settingColors Colors of setting
+ * @param modifier Modifier of the LazyList where items are
+ * displayed
+ * @param settingTextStyle Text style for all text use in setting
  * @param content DSL (Domain Specific Language)
  */
 @OptIn(ExperimentalAnimationApi::class)
@@ -202,13 +207,14 @@ fun Setting(
     ) {
         if (it) {
             BaseFirstView(
-                modifier = modifier,
+                modifier = modifier
+                    .background(settingColors.background),
                 settingState = settingState,
                 list = list
             )
         } else {
             val contentFun = map[settingState.advanceIndex]
-            Box(modifier) {
+            Box(modifier.background(settingColors.background)) {
                 contentFun?.invoke()
             }
         }
