@@ -259,7 +259,7 @@ internal class SettingScopeImpl(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(settingColors.container)
+                .background(settingColors.background)
         ) {
             Text(
                 text = text,
