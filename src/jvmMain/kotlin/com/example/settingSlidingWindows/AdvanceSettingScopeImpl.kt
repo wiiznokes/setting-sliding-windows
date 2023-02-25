@@ -21,7 +21,7 @@ internal class AdvanceSettingScopeImpl(
 ) : AdvanceSettingScope {
 
     @Composable
-    override fun Header(
+    override fun header(
         title: String?,
         settingColors: SettingColors?,
     ) {
@@ -33,12 +33,12 @@ internal class AdvanceSettingScopeImpl(
             )
 
         if (title != null)
-            BaseHeader(
+            baseHeader(
                 title = title,
                 settingColors = settingColors ?: _settingColors
             )
         else
-            BaseHeader(
+            baseHeader(
                 title = _title!!,
                 settingColors = settingColors ?: _settingColors
             )
@@ -47,13 +47,13 @@ internal class AdvanceSettingScopeImpl(
 
 
     @Composable
-    private fun BaseHeader(
+    private fun baseHeader(
         title: String,
         settingColors: SettingColors,
     ) {
         Column(
             modifier = Modifier.background(
-                color = settingColors.container
+                color = settingColors.background
             ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -68,13 +68,13 @@ internal class AdvanceSettingScopeImpl(
                     Icon(
                         painter = getIcon("chevron/chevron_left${SettingDefaults.iconSize}"),
                         contentDescription = null,
-                        tint = settingColors.onContainer
+                        tint = settingColors.onBackground
                     )
                 }
                 Text(
                     modifier = Modifier.align(Alignment.Center),
                     style = settingTextStyle.advanceItemHeaderStyle,
-                    color = settingColors.onContainer,
+                    color = settingColors.onBackground,
                     text = title
                 )
             }
@@ -82,7 +82,7 @@ internal class AdvanceSettingScopeImpl(
             Divider(
                 modifier = Modifier.fillMaxWidth(0.95f),
                 thickness = 2.dp,
-                color = settingColors.onContainer
+                color = settingColors.onBackground
             )
             Spacer(Modifier.height(40.dp))
         }

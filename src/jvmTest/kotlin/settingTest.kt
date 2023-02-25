@@ -58,7 +58,7 @@ fun settingTest(
             // displayed header (parameter optional because already know)
             // include a button to go back
             // (From DSL)
-            Header(title = null, settingColors = null)
+            header(title = null, settingColors = null)
 
             // display a list of language
             languageAdvanceSetting(language)

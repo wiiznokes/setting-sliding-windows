@@ -38,11 +38,13 @@ object SettingDefaults {
     fun settingColors(
         container: Color = MaterialTheme.colorScheme.surface,
         onContainer: Color = MaterialTheme.colorScheme.onSurface,
-        background: Color = MaterialTheme.colorScheme.background
+        background: Color = MaterialTheme.colorScheme.background,
+        onBackground: Color = MaterialTheme.colorScheme.onBackground
     ): SettingColors = SettingColors(
         container = container,
         onContainer = onContainer,
-        background = background
+        background = background,
+        onBackground = onBackground
     )
 
     @OptIn(ExperimentalUnitApi::class)
@@ -73,7 +75,8 @@ object SettingDefaults {
 data class SettingColors(
     val container: Color,
     val onContainer: Color,
-    val background: Color
+    val background: Color,
+    val onBackground: Color
 )
 
 data class SettingTextStyle(
@@ -206,7 +209,7 @@ fun Setting(
         }
     ) {
         if (it) {
-            BaseFirstView(
+            baseFirstView(
                 modifier = modifier
                     .background(settingColors.background),
                 settingState = settingState,
@@ -223,7 +226,7 @@ fun Setting(
 
 
 @Composable
-private fun BaseFirstView(
+private fun baseFirstView(
     modifier: Modifier = Modifier,
     settingState: SettingState = rememberSettingState(),
     list: MutableList<@Composable () -> Unit>,

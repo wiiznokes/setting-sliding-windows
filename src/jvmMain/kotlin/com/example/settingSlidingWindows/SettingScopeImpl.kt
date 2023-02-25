@@ -29,10 +29,12 @@ internal class SettingScopeImpl(
 
     override fun header(
         title: String,
+        settingColors: SettingColors?
     ) {
         list.add {
             baseHeader(
-                title = title
+                title = title,
+                settingColors = settingColors ?: _settingColors
             )
         }
     }
@@ -47,11 +49,12 @@ internal class SettingScopeImpl(
     @Composable
     private fun baseHeader(
         title: String,
+        settingColors: SettingColors,
     ) {
         Row(
             modifier = Modifier
                 .background(
-                    color = _settingColors.container
+                    color = settingColors.background
                 )
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -61,7 +64,7 @@ internal class SettingScopeImpl(
                     .padding(start = 25.dp, top = 40.dp, bottom = 40.dp),
                 text = title,
                 style = settingTextStyle.headerStyle,
-                color = _settingColors.onContainer
+                color = settingColors.onBackground
             )
         }
     }
@@ -242,7 +245,7 @@ internal class SettingScopeImpl(
         list.add {
             baseGroup(
                 text = text,
-                settingColors = settingColors ?: _settingColors,
+                settingColors = settingColors ?: _settingColors
             )
         }
     }
@@ -254,7 +257,7 @@ internal class SettingScopeImpl(
     @Composable
     private fun baseGroup(
         text: String,
-        settingColors: SettingColors,
+        settingColors: SettingColors
     ) {
         Box(
             modifier = Modifier
@@ -264,7 +267,7 @@ internal class SettingScopeImpl(
             Text(
                 text = text,
                 style = settingTextStyle.groupStyle,
-                color = settingColors.onContainer,
+                color = settingColors.onBackground,
                 modifier = Modifier
                     .padding(top = SettingDefaults.largePadding, bottom = SettingDefaults.smallPadding)
             )

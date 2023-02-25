@@ -10,6 +10,7 @@ interface SettingScope {
      */
     fun header(
         title: String,
+        settingColors: SettingColors? = null
     )
 
     /**
@@ -17,7 +18,7 @@ interface SettingScope {
      * @param content
      */
     fun header(
-        content: @Composable () -> Unit,
+        content: @Composable () -> Unit
     )
 
 
