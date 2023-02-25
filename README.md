@@ -17,7 +17,7 @@ allprojects {
 
 ```
 dependencies {
-    implementation 'com.github.wiiznokes:setting-sliding-windows:version'
+    implementation 'com.github.wiiznokes:setting-sliding-windows:$version'
 }
 ```
 
@@ -32,7 +32,7 @@ repositories {
 
 ```
 dependencies {
-    implementation("com.github.wiiznokes:setting-sliding-windows:version")
+    implementation("com.github.wiiznokes:setting-sliding-windows:$version")
 }
 ```
 
