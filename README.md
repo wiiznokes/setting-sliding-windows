@@ -36,9 +36,13 @@ dependencies {
 }
 ```
 
+
+<img src="assets/app.png">
+
+
 This lib use material 3
 
-[![Watch the video](./assets/preview.webm)](./assets/preview.webm)
+img
 
 An example on how to use it can be
 found [here](https://github.com/wiiznokes/setting-sliding-windows/blob/master/src/jvmTest/kotlin/settingTest.kt)

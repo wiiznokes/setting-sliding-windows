@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.example"
-version = "3.1.0"
+version = "3.1.1"
 
 repositories {
     google()
@@ -20,8 +20,9 @@ kotlin {
         val jvmMain by getting {
             resources.srcDirs("resources")
 
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             dependencies {
-                api("org.jetbrains.compose.material3:material3-desktop:${extra["compose.version"] as String}")
+                api(compose.material3)
             }
         }
         val jvmTest by getting {
