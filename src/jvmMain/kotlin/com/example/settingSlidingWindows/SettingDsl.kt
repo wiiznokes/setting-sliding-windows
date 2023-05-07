@@ -38,7 +38,9 @@ interface SettingScope {
         title: String? = null,
         subTitle: String? = null,
         advanceIconButton: @Composable (() -> Unit)? = null,
+        showAdvanceIcon: Boolean = true,
         showTopLine: Boolean = false,
+        onClick: (() -> Unit)? = null,
         advanceItemContent: (@Composable AdvanceSettingScope.() -> Unit)? = null,
     )
 

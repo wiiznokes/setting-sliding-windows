@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.example"
-version = "3.1.1"
+version = "${project.property("lib.version")}"
 
 repositories {
     google()

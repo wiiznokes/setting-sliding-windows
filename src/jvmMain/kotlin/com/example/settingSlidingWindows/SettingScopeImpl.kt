@@ -72,12 +72,14 @@ internal class SettingScopeImpl(
 
     override fun item(
         settingColors: SettingColors?,
-        icon: @Composable (() -> Unit)?,
+        icon: @Composable() (() -> Unit)?,
         title: String?,
         subTitle: String?,
-        advanceIconButton: @Composable (() -> Unit)?,
+        advanceIconButton: @Composable() (() -> Unit)?,
+        showAdvanceIcon: Boolean,
         showTopLine: Boolean,
-        advanceItemContent: @Composable (AdvanceSettingScope.() -> Unit)?,
+        onClick: (() -> Unit)?,
+        advanceItemContent: @Composable() (AdvanceSettingScope.() -> Unit)?
     ) {
         val index = size
         list.add {
@@ -87,8 +89,10 @@ internal class SettingScopeImpl(
                 title = title,
                 subTitle = subTitle,
                 advanceIconButton = advanceIconButton,
+                showAdvanceIcon = showAdvanceIcon,
                 index = index,
-                showTopLine = showTopLine
+                showTopLine = showTopLine,
+                onClick = onClick
             )
         }
         if (advanceItemContent != null) {
@@ -144,8 +148,10 @@ internal class SettingScopeImpl(
         title: String?,
         subTitle: String?,
         advanceIconButton: @Composable (() -> Unit)?,
+        showAdvanceIcon: Boolean,
         index: Int,
         showTopLine: Boolean,
+        onClick: (() -> Unit)?
     ) {
         if (showTopLine) {
             Divider(
@@ -163,6 +169,7 @@ internal class SettingScopeImpl(
                     )
                     .clickable(
                         onClick = {
+                            onClick?.invoke()
                             settingState.openAdvance(index)
                         }
                     ),
@@ -170,17 +177,19 @@ internal class SettingScopeImpl(
             ) {
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
 
-                    if (advanceIconButton != null) {
-                        advanceIconButton()
-                    } else {
-                        IconButton(
-                            onClick = { settingState.openAdvance(index) }
-                        ) {
-                            Icon(
-                                painter = getIcon("chevron/chevron_right${SettingDefaults.iconSize}"),
-                                contentDescription = null,
-                                tint = settingColors.onContainer
-                            )
+                    if (showAdvanceIcon) {
+                        if (advanceIconButton != null) {
+                            advanceIconButton()
+                        } else {
+                            IconButton(
+                                onClick = { settingState.openAdvance(index) }
+                            ) {
+                                Icon(
+                                    painter = getIcon("chevron/chevron_right${SettingDefaults.iconSize}"),
+                                    contentDescription = null,
+                                    tint = settingColors.onContainer
+                                )
+                            }
                         }
                     }
 
